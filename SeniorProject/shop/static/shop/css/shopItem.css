@@ -1,0 +1,351 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.container-fluid {
+    width: 100%;
+    height: auto;
+    min-height: fit-content;
+    display: block;
+    position: relative;
+    margin: 10px;
+}
+
+.wholecontainer {
+    display: flex;
+    min-height: 100%; /* was 80vh */
+    width: 100%;
+}
+
+.itemImageContainer {
+    width: 50%;
+    height: 100%;
+    position: relative;
+    padding:0px;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Center the image vertically within the container */
+}
+.imageWrapper {
+    position: relative;
+    display: inline-block; /* Allows wrapper to adjust to image size */
+}
+.itemImage {
+    object-fit: contain; /* Ensure the image scales without distortion */
+    max-width: 50vw; /* Max width is 50% of the viewport width */
+    max-height: 80vh; /* Max height is 80% of the viewport height */
+    display: block;
+}
+
+
+.favorite-btn {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    border-radius: 100%; /* Makes the button circular */
+    background-color: hsla(0, 0%, 100%, .9); /* Light background */
+    box-shadow: 0 0 3px 0 rgba(0, 0, 0, .1); /* Light shadow */
+    width: 35px; /* Set width to control the size */
+    height: 35px; /* Set height to control the size */
+    display: flex; /* Use flexbox to center the icon */
+    align-items: center; /* Center icon vertically */
+    justify-content: center; /* Center icon horizontally */
+    padding: 0px; /* Remove default padding */
+    border: none; /* Remove default border if needed */
+    font-size: 18px; /* Adjust icon size */
+}
+/*
+.wishlist-button {
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 50%;
+}
+.wishlist-button i {
+    font-size: 1.5em;
+    color: red;
+}
+*/
+/*----------------------------------------------CONTENT-------------------------------------------*/
+.content {
+    padding-top:20px;
+    margin-left: 30px;
+    display: flex;
+    flex-direction: column; /* Aligns items in a column */
+    align-items: center; /* Centers the content horizontally */
+    /*justify-content: space-around;*/
+    min-height: fit-content; /* Make sure the content takes up full height of the viewport */
+    /*font*/
+    font-family: 'Raleway', sans-serif;
+    font-weight:400;
+    letter-spacing: 0.06em;
+    line-height: 1.8;
+    gap: 30px;
+}
+
+
+.itemTitle {
+    font-size: 2em;
+    margin: 0px;
+}
+
+.itemPrice,.itemDescription {
+    margin-bottom: 0px;
+    max-width: 100%;
+    overflow-wrap: break-word;
+}
+.itemPrice{
+    font-size: 1.2em;
+}
+.itemDescription{
+    font-size: 1em;
+}
+
+
+.add-to-cart {
+    --initial-gradient: linear-gradient(rgb(0, 0, 0), rgb(0, 0, 0)); /* Black background by default */
+    --hover-gradient: linear-gradient(rgb(255, 255, 255), rgb(255, 255, 255)); /* White background on hover */
+    --initial-background-position: right;
+    --hover-background-position: left;
+    -webkit-appearance: none;
+    appearance: none;
+    font: inherit;
+    width: 65%; /* Full width */
+    max-width: 100%; /* Prevent overflow */
+    text-shadow: none;
+    text-align: center;
+    cursor: pointer;
+    color: white; /* White text by default */
+    border: 1px solid black; /* Black border */
+    border-radius: 0px;
+    background-color: transparent; /* Transparent background */
+    background-image: var(--initial-gradient), var(--hover-gradient);
+    background-size: 100% 100%, 0 100%;
+    background-position: var(--initial-background-position);
+    background-repeat: no-repeat;
+    justify-content: center;
+    align-items: center;
+    padding: .65rem 1.75rem; /* Adjust padding to maintain width */
+    transition: background-size .45s cubic-bezier(.785,.135,.15,.86), background-position .45s step-end, color .45s cubic-bezier(.785,.135,.15,.86), border .45s cubic-bezier(.785,.135,.15,.86);
+    display: inline-flex;
+    position: relative;
+    box-sizing: border-box;
+}
+
+/* Hover effect */
+.add-to-cart:hover{
+    background-size: 0 100%, 100% 100%; /* Swap background size on hover */
+    background-position: var(--hover-background-position);
+    color: black; /* Change text color to black on hover */
+    border-color: black; /* Keep border color black on hover */
+}
+/*
+.add-to-cart {
+    background-color: black;
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+    border: none;
+}*/
+@media (max-width: 991px) {
+    .wholecontainer {
+        flex-direction: column;
+        align-items: center;
+        height: auto; /*modified this*/
+    }
+
+    .itemImageContainer, .content {
+        width: 100%;
+    }
+    /*added itemImage so that the image can take up the max width and height it can take*/
+    .itemImage {
+        object-fit: contain; /* Ensure the image scales without distortion */
+        max-width: 100%; /* was 100vw;*/
+        max-height: 100%; 
+        display: block;
+        margin-left: 10px;
+    }
+    .content {
+        /*padding: 40px 0px 0px 0px;*/ /* You can adjust padding as needed */
+        margin-left: 0px;
+        /*new*/
+        max-height: 380px;
+    }
+    
+    .itemTitle {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .itemPrice,.itemDescription {
+        font-size: 14px;
+        margin-bottom: 40px;
+    }
+    .itemDescription{
+        padding-left: 30px;
+    }
+}
+/*---------------------form--------------------------------*/
+.button_form{
+    width:100%;
+    padding:0px; 
+    display:flex; 
+    justify-content:center;
+}
+
+/*-------------------------------------------------Updated/New----------------------------------------------------------*/
+
+/* Styling the color buttons */
+.color-selector {
+    margin: 0px;
+    display: flex;
+    flex-direction: column;
+    align-content: left;
+    justify-content: left;
+  }
+  
+  .color-buttons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .color-button {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border: 2px solid darkgrey;
+    background-color: var(--color, #ffffff); /* Fallback to white */
+    cursor: pointer;
+    transition: transform 0.3s, border 0.3s;
+  }
+  
+  .color-button.selected {
+    border: 2px solid #000; /* Highlight the selected button */
+    transform: scale(1.2);
+  }
+  
+  /* Hover effect */
+  .color-button:hover {
+    transform: scale(1.1);
+  }
+  .color-selector {
+    margin: 0px;
+    display: flex;
+    flex-direction: column;
+    align-content: left;
+    justify-content: left;
+  }
+  
+  .color-buttons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .color-button {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border: 2px solid darkgrey;
+    background-color: var(--color, #ffffff); /* Fallback to white */
+    cursor: pointer;
+    transition: transform 0.3s, border 0.3s;
+  }
+  
+  .color-button.selected {
+    border: 2px solid #000; /* Highlight the selected button */
+    transform: scale(1.2);
+  }
+  
+  /* Hover effect */
+  .color-button:hover {
+    transform: scale(1.1);
+  }
+
+.color-button.disabled {
+    cursor: not-allowed;
+    position: relative; /* For positioning the diagonal line */
+}
+/* dim the disabled button */
+.color-button.disabled::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white; /* Use a semi-transparent white overlay */
+    opacity: 0.5;
+    border-radius: 50%;
+    z-index: 1; /* Place above the button but below the line */
+}
+/* diagonal line to cross the disabled button */
+.color-button.disabled::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top right, transparent calc(50% - 1px), black, transparent calc(50% + 1px));
+    border-radius: 50%;
+    z-index: 2; /* Place above the white overlay */
+}
+/*------------------------------------------------- size options---------------------------------------------*/
+.size-options {
+    display: flex;
+    gap: 13px;
+    margin: 0px;
+}
+
+.size-options .size-options-button {
+    padding: 10px 15px;
+    border: 1px solid #000;
+    background-color: transparent;
+    cursor: pointer;
+    transition: background-color 0.5s  ease-in-out, color 0.5s;
+}
+
+/* Base style for size options button already exists */
+
+/* Selected button style */
+.size-options-button.selected {
+    border: 2px solid #000; /* Bolder border */
+    font-weight: bold; /* Optional: make text bolder too */
+}
+
+/* Disabled button styles */
+.size-options-button.disabled {
+    cursor: not-allowed;
+    position: relative; /* For positioning the diagonal line */
+}
+
+/* Dim the disabled button */
+.size-options-button.disabled::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    opacity: 0;
+    z-index: 1;
+}
+
+/* Diagonal line to cross the disabled button */
+.size-options-button.disabled::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top right, transparent calc(50% - 1px), black, transparent calc(50% + 1px));
+    z-index: 2;
+}

@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BELLE - Your Lovelist</title>
+    
+    <!--Bootsrap 5-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- FontAwesome 4.x CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!--Font: Raleway-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    
+    <!-- My css files-->
+    <link rel="stylesheet" href="{% static 'css/headerstyle.css' %}">
+    <link rel="stylesheet" href="{% static 'shop/css/shop.css' %}">
+    <link rel="stylesheet" href="{% static 'shop/css/cart.css' %}">
+    <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+    <link rel="stylesheet" href="{% static 'shop/css/wishlist.css' %}">
+    <!--My js files-->
+    <script src="{% static 'shop/js/wishlist.js' %}"></script>
+    <!--js files-->
+    <script src="{% static 'shop/js/cart.js' %}"></script>
+    <!--Chatbot-->
+    <script defer src="https://app.fastbots.ai/embed.js" data-bot-id="cmalkfyek018crilyk5j4m42m"></script>
+
+</head>
+<body class="generalFont">
+    {% include 'base/header.html' %}
+    
+    <!-- Wishlist Header Section -->
+    <div class="wishlist-header">
+        <div class="container">
+            <h2 class="wishlist-title">Your Lovelist</h2>
+        </div>
+        {% if not user.is_authenticated %}
+        <div class="login-message">
+            <h3>You're not logged in</h3>
+            <p>Please <a href="{% url 'users:login' %}">login</a> to view your lovelist.</p>
+        </div>
+        {% endif %}
+    </div>
+    {% if user.is_authenticated %}
+    <!-- Wishlist Items Display -->
+        <div class="container-fluid">
+            {% if products_colors %}
+                <div class="row center-cards">
+                    {% for product_color in products_colors %}
+                    <div class="col-lg-3 col-md-5 col-sm-10 myCard">
+                        <div class="card product-card">
+                            {% if product_color.total_product_color_stock > 0 %}
+                            <a href="{% url 'shop:shop_item' item_id=product_color.id %}">
+                                <div class="product-image">
+                                    <img src="{{ product_color.get_image }}" class="img-fluid available-image" alt="Product Image">
+                                    
+                                    <button class="favorite-btn in-wishlist" data-tip="Remove from Wishlist" data-product-id="{{ product_color.id }}">
+                                        <i class="fa fa-heart" aria-hidden="true"></i>
+                                    </button>
+                                    <div class="middle">
+                                        <a href="{% url 'shop:shop_item' item_id=product_color.id %}" class='viewButton'>View Details</a>
+                                    </div>
+                                </div>
+                            </a>
+                            {% else %}
+                            <!-- If the item is sold out then the image is not a link -->
+                                <div class="product-image">
+                                    <img src="{{ product_color.get_image }}" class="img-fluid sold-out-image" alt="Product Image">
+                                    
+                                    <button class="favorite-btn in-wishlist" data-tip="Remove from Wishlist" data-product-id="{{ product_color.id }}">
+                                        <i class="fa fa-heart" aria-hidden="true"></i>
+                                    </button>
+                                    <div class="sold-out-middle">
+                                    <p class="sold-out-title">SOLD OUT</p>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            
+                            <div class="card-body">
+                                <p class="card-title">{{ product_color.product.title }}</p>
+                                <p class="card-price">${{ product_color.product.price }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="no-wishlist-items">
+                    <h3>Your lovelist is empty</h3>
+                    <p>Browse our <a href="{% url 'shop:shop' %}">products</a> and add items you love!</p>
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+    <!-- Footer -->
+    {% include 'base/footer.html' %}
+    
+    <!-- Cart -->
+    {% include 'shop/cart.html' %}
+</body>
+</html>

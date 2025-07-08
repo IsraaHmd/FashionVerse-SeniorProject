@@ -1,0 +1,196 @@
+
+/*---------------------------------new for senior------------------------------*/
+.moving-text-container {
+    position: absolute;
+    top: 70%;
+    min-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.moving-text {
+    display: inline-block;
+}
+
+.head {
+    position: relative;
+    overflow: hidden;
+}
+
+.head::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.1); /* Adjust opacity for the dimming of header picture */
+    z-index: -1;
+}
+.paragraphs{
+    font-size: 18px;
+}
+/*----------------------------------------------header---------------------------------------*/
+.headerElement{
+    font-weight: bolder;
+}
+.header-menu-container{
+    min-width: 100%;
+    transition: 0.3s;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), transparent);
+    --header-elements-color:white;
+}
+.header-menu-container:hover{
+    background-color: black;
+    opacity: 0.7;
+    --header-elements-color:white;
+}
+
+header{
+    height: 100vh;
+    background-color: transparent;
+    position: relative; /* Ensure the background image is contained within the header */
+}
+#bgimg{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    z-index: -1; 
+}
+/*
+.bnr-caption {
+    position: absolute;
+    z-index: 1;
+    left: 15%; 
+    transform: translate(-50%, -50%); 
+    width: 100%;
+    text-align: center;
+    padding: 0 20px; 
+   
+
+}
+*/
+@media (max-width: 991px) {
+    .bnr-caption {
+        min-width:100%;
+        left: 0;
+        top: auto;
+        bottom: 10%;
+        transform: none; 
+    }
+}
+@media (min-width: 992px) {
+    .bnr-caption {
+        top: auto;
+        bottom: 50px; 
+    }
+    .desk_center {
+        text-align: center;
+    }
+}
+.aboutUsTitle {
+    font-family: "New York", Iowan Old Style, Apple Garamond, Baskerville, Times New Roman, Droid Serif, Times, Source Serif Pro, serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+    font-weight: light;
+    letter-spacing: 0.04em;
+    color: White; 
+    margin: 0; 
+    /*background-color: rgba(255, 255, 255, 0.1);*/
+    font-size: 3rem;
+
+}
+.title{
+    font-family: "New York", Iowan Old Style, Apple Garamond, Baskerville, Times New Roman, Droid Serif, Times, Source Serif Pro, serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+    font-weight: light;
+    letter-spacing: 0.04em;
+    color: black; 
+    margin: 0; 
+    font-size: 3rem;
+
+}
+@media (max-width: 767px) {
+    .aboutUsTitle {
+        font-size: 2rem; /* Smaller font size for mobile devices */
+    }
+    .title{
+        font-size: 2rem;
+    }
+}
+/*-----------------------------------------------------------Done with header --------------------------------------------*/
+/*---------------------------------------------------------- par and vid --------------------------------------------*/
+main{
+    min-height: 100vh;
+    font-family:"New York", Iowan Old Style, Apple Garamond, Baskerville, Times New Roman, Droid Serif, Times, Source Serif Pro, serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    line-height: 1.6;
+    font-size: medium;
+}
+
+.section1 {
+    padding: 100px; 
+    height: auto;
+}
+
+.abtParContainer {
+    margin: 30PX 60px 30px 0px; /* Adds some space between text and image */
+}
+.fullvideo{
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    object-position: center;
+    margin-top: 20px;
+}
+/*------------------------------------------------------------- OUR STORY ------------------------------------------*/
+
+.section2{
+    margin:0px 0px 30px 0px;
+    padding:0px;
+    width: 95%;
+}
+
+.storypar{
+    margin: 20px 0px 0px 100px;
+}
+
+.parImage {
+    width: auto;
+    height: auto; /* Ensures the image maintains aspect ratio */
+    max-height:500px;
+}
+@media (max-width: 991px) {
+    .section1{
+        padding:40px;
+    }
+    .row>* {
+        width:95%;
+    }
+    .section2, .section2 .row{
+        width: 95%;
+        padding-left: 0px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .abtParContainer {
+        width: 100%; /* Full width for smaller screens */
+        margin: 0;
+    }
+
+    .fullvideo {
+        width: 100%; /* Make video full-width on smaller screens */
+    }
+
+    .storypar {
+        margin: 10px 25px 0px 25px;
+        font-size: 14px;
+    }
+
+    .parImage {
+        /* width: 100%;  Full width on mobile */
+        margin-left: 0px;
+    }
+}

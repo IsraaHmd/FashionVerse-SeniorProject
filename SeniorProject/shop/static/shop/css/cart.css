@@ -1,0 +1,153 @@
+/*-- Beforeeeeeee */
+/*----------------------CART----------------------------------------*/
+
+.offcanvas.show:not(.hiding), .offcanvas.showing {
+    transform: none;
+}
+.offcanvas.hiding, .offcanvas.show, .offcanvas.showing {
+    visibility: visible;
+}
+
+.offcanvas.custom-offcanvas {
+    --bs-offcanvas-width: 500px !important; /*changed from 400px*/
+}
+@media screen and (max-width: 1999px){
+    .offcanvas.custom-offcanvas {
+        --bs-offcanvas-width: 500px !important; /*changed from 400px*/
+    }
+}
+@media screen and (min-width: 1200px){
+    .offcanvas.custom-offcanvas {
+        --bs-offcanvas-width: 600px !important; /*changed from 400px*/
+    }
+}
+@media screen and (max-width: 600px){
+    .img_small{
+        max-width: 50%;
+    }
+}
+/* Cart button styling */
+.cartButton {
+    font-size: 12px;
+    line-height: 12px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    font-weight: 400;
+    text-decoration: none;
+    /*------added from me-----*/
+    --initial-gradient: linear-gradient(rgb(0, 0, 0), rgb(0, 0, 0)); /* Black background by default */
+    --hover-gradient: linear-gradient(rgb(255, 255, 255), rgb(255, 255, 255)); /* White background on hover */
+    --initial-background-position: right;
+    --hover-background-position: left;
+    -webkit-appearance: none;
+    appearance: none; 
+    /*width: 100%; Full width */
+    max-width: 100%; /* Prevent overflow */
+    text-shadow: none;
+    text-align: center;
+    cursor: pointer;
+    color: white; /* White text by default */
+    --bs-btn-border-color: black; /* Override to ensure black border */
+    --bs-btn-hover-border-color: black; /* Ensure border remains black on hover */
+    --bs-btn-border-radius: 0px; /* Match your design's border radius */
+    border: 1px solid black; /* Black border */
+    border-radius: 0px;
+
+    background-color: transparent; /* Transparent background */
+    background-image: var(--initial-gradient), var(--hover-gradient);
+    background-size: 100% 100%, 0 100%;
+    background-position: var(--initial-background-position);
+    background-repeat: no-repeat;
+    justify-content: center;
+    align-items: center;
+    padding:  21px 25px;
+    transition: background-size .45s cubic-bezier(.785,.135,.15,.86), background-position .45s step-end, color .45s cubic-bezier(.785,.135,.15,.86), border .45s cubic-bezier(.785,.135,.15,.86);
+    display: inline-flex;
+    position: relative;
+    box-sizing: border-box;
+    /*new*/
+    margin-bottom: 20px;
+}
+/* Hover effect */
+.cartButton:hover {
+    background-size: 0 100%, 100% 100%; /* Swap background size on hover */
+    background-position: var(--hover-background-position);
+    color: black; /* Change text color to black on hover */
+    border-color: black; /* Keep border color black on hover */
+    text-decoration: none;
+    border: 1px solid black;
+    --bs-btn-hover-border-color: black; /* Ensure border remains black on hover */
+}
+/* remove the button shadow effect of x button*/
+.btn-close:focus {
+    outline: none; /* Removes the outline */
+    box-shadow: none; /* Removes the box shadow */
+}
+
+.btn-close:hover {
+    color: black !important; /* Ensures the hover color applies */
+    background: transparent url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='currentColor'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e") center / 1em auto no-repeat;
+
+}
+
+/*----Header font---*/
+.someItems-font{
+    font-family:"New York", Iowan Old Style, Apple Garamond, Baskerville, Times New Roman, Droid Serif, Times, Source Serif Pro, serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+    font-weight: 400;
+}
+.cart-header{
+    font-family:"New York", Iowan Old Style, Apple Garamond, Baskerville, Times New Roman, Droid Serif, Times, Source Serif Pro, serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    font-size: 32px;
+}
+/* Counting items badge*/
+.badge-black {
+    background-color: black;
+    color: white;  /* Adjust text color if needed */
+
+  }
+
+/* new */
+
+.input-group{
+    border: 1px solid lightgrey;
+    width: 50%;
+}
+.input-group .form-control {
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+}
+
+.input-group .btn {
+    border-radius: 0;
+    border: none;
+}
+
+.form-select , .form-select:focus{
+    box-shadow: none;
+    border-radius: 0;
+}
+.dropdown{
+    width:50%;
+    border: none;
+}
+.dropdown-menu{
+    border-radius: 0;
+    width:50%;
+}
+.sizeDropdown, .sizeDropdown:focus{
+    box-shadow: none;
+    border: 1px solid lightgrey;
+    display: flex;
+    justify-content: left;
+}
+.dropdown-item:focus, .dropdown-item:hover{
+    background-color: black;
+    color: white;
+}
+.cart-message {
+    padding: 0.5rem 0;
+    margin-bottom: 0.5rem;
+  }

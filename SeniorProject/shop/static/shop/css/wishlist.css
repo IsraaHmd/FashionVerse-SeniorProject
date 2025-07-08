@@ -1,0 +1,128 @@
+/*------------------------------ Wishlist.html template styling: ------------------------*/
+.wishlist-header {
+    background-color: white;
+    padding: 40px 0;
+    text-align: center;
+}
+
+.wishlist-title {
+    margin-bottom: 30px;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 400;
+}
+
+.no-wishlist-items {
+    text-align: center;
+    padding: 50px 0;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 400;
+}
+.login-message {
+    text-align: center;
+    padding: 50px 0;
+    font-family: 'Raleway', sans-serif;
+}
+
+.login-message a {
+    text-decoration: none;
+    color: black;
+    font-weight: 600;
+}
+
+.login-message a:hover {
+    text-decoration: underline;
+    text-decoration-color: black;
+}
+
+/*------------------------------ Favorite icon and alert (General) styling ----------------------------------*/
+/* styling for heart icon */
+.favorite-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border-radius: 100%; /* Makes the button circular */
+    background-color: hsla(0, 0%, 100%, .9); /* Light background */
+    box-shadow: 0 0 3px 0 rgba(0, 0, 0, .1); /* Light shadow */
+    width: 35px; /* Set width to control the size */
+    height: 35px; /* Set height to control the size */
+    display: flex; /* Use flexbox to center the icon */
+    align-items: center; /* Center icon vertically */
+    justify-content: center; /* Center icon horizontally */
+    padding: 0; /* Remove default padding */
+    border: none; /* Remove default border if needed */
+    font-size: 18px; /* Adjust icon size */
+ }
+ 
+.favorite-btn i {
+    color: #333;
+    transition: all 0.2s ease;
+}
+
+.favorite-btn:hover i {
+    transform: scale(1.1);
+}
+
+.favorite-btn.in-wishlist i {
+    color: #000;
+}
+/* For the favorite button datatip */
+
+.favorite-btn:hover:before, favorite-btn:hover:after {
+    visibility: visible;
+    top: 30px;
+ }
+ .favorite-btn:after {
+    content: '';
+    height: 15px;
+    width: 15px;
+    padding: 0;
+    transform: translateX(-50%) rotate(45deg);
+    right: auto;
+    left: 50%;
+    top: 15px;
+    z-index: -1;
+ }
+ .favorite-btn:before, .favorite-btn:after {
+    content: attr(data-tip);
+    color: #fff;
+    background-color: #000;
+    font-size: 12px;
+    line-height: 18px;
+    padding: 7px 7px 5px;
+    visibility: hidden;
+    position: absolute;
+    right: 0;
+    top: 15px;
+    transition: all 0.3s ease 0s;
+ }
+/* Alert styling for wishlist messages */
+.wishlist-alert {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1050;
+    min-width: 300px;
+    min-height: 150px;
+    max-width: 80%;
+    background-color: white;
+    color: #333;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 12px 20px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Animation for heart icon when toggling */
+@keyframes heartPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.favorite-btn i.fa-heart {
+    animation: heartPulse 0.4s ease-in-out;
+}

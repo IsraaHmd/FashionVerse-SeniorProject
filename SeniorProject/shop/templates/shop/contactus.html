@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BELLE CONTACT US</title>
+   
+     <!--OLD Bootstrap: Bootstrap 4.0.0 
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    -->
+     <!--Bootsrap 5-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- FontAwesome 4.x CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!--my custom css-->
+    <link rel="stylesheet" href="{% static 'shop/css/contactus.css' %}">
+    <link rel="stylesheet" href="{% static 'css/footer.css' %}">  
+    <link rel="stylesheet" href="{% static 'shop/css/cart.css' %}">
+    <link rel="stylesheet" href="{% static 'css/headerstyle.css' %}">
+    <!--custom js-->
+    <script src="{% static 'shop/js/cart.js' %}"></script>
+    <!--Font: Raleway-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!--Chatb-->
+    <script defer src="https://app.fastbots.ai/embed.js" data-bot-id="cmalkfyek018crilyk5j4m42m"></script>
+</head>
+<body>
+    {% include 'base/header.html' %}
+    <div class="container-fluid wholeContainer">
+        <div class="ourTitle">
+            <p class="line1">Our Client Advisors are ready to assist you.</p>
+            <p class="line2">WE ARE GLAD TO HELP</p>
+            <p class="line3">Fill in the below form and we will get back to you the soonest.</p>
+        </div>
+        <div class="formCont">
+            <form action="{% url 'shop:contactus' %}" method="post" class="fontUsed pageForm">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-lg-6 col-sm-12 column1">
+                        <input type="text" class="form-control" name="name" placeholder="Name or Username" value="{{ name }}">
+                    </div>
+                    <div class="col-lg-6 col-sm-12">
+                        <input type="text" class="form-control" name="email" placeholder="E-mail" value="{{ email }}">
+                    </div>
+                </div>
+                <div>
+                    <textarea class="form-control" rows="4" placeholder="Message" name="message"></textarea>
+                </div>
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="message-text {% if message.tags == 'error' %}text-danger{% else %}text-dark{% endif %}" style="text-align: center;">
+                            <b>{{ message }}</b>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                <button type="submit" class="button-contactus">Submit</button>
+            </form>
+        </div>
+        
+
+        <div class="infoCont">
+            <div>Emails:</div>
+            <div>Inquiries & Customer Care | office@belle.com</div>
+            <div>Business Partnerships | retail@belle.com</div>
+            <div>Media & Communications | press@belle.com</div>
+            <br>
+            <div>Call Us(Mon-Fri: 5am-5pm): +1 555-555-5555</div>
+        </div>
+    </div>
+    <!--====================================================FOOTER============================================-->
+    {% include 'base/footer.html' %}
+    
+    <!--====================================================END OF FOOTER=======================================-->
+    {% include 'shop/cart.html' %}
+</body>
+</html>

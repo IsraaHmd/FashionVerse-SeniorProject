@@ -1,0 +1,128 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BELLE ITEM</title>
+    <!--My Css files-->
+    <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+    <link rel="stylesheet" href="{% static 'css/headerstyle.css' %}">
+   
+    <link rel="stylesheet" href="{% static 'shop/css/shopItem.css' %}">
+    <!--Bootsrap 5-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- FontAwesome 4.x CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!--Font: Raleway-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    
+    <!--My other css files:-->
+    <link rel="stylesheet" href="{% static 'shop/css/cart.css' %}">
+    <link rel="stylesheet" href="{% static 'shop/css/wishlist.css' %}">
+    <!--My javascript files-->
+    <script src="{% static 'shop/js/shopItem.js' %}"></script>
+    <!-- Js for this file is in shopItem.js it is used for displaying the colors and ajax so that when another color is selected no need to refresh the page -->
+    
+    <script src="{% static 'shop/js/cart.js' %}"></script>
+    <script src="{% static 'shop/js/wishlist.js' %}"></script>
+    <!--Chatbot-->
+    <script defer src="https://app.fastbots.ai/embed.js" data-bot-id="cmalkfyek018crilyk5j4m42m"></script>
+</head>
+<body data-user-authenticated="{% if user.is_authenticated %}true{% else %}false{% endif %}">
+    {% include 'base/header.html' %}
+    <!--Alerts for errors later when cart and favorites are developed-->
+    {% if not_found_message %}
+    <center>Product not found.</center>
+    {% else %}
+    <div class="container-fluid">
+        <div class="row wholecontainer">
+            <div class="col-lg-6 col-md-10 col-sm-9 position-relative itemImageContainer">
+                <div class="imageWrapper">
+                    <img src="{{ product_color.get_image }}" alt="ShoppingItem" class="itemImage selected-product-image">
+                   
+                    <button class="favorite-btn {% if product_color.in_wishlist %}in-wishlist{% endif %}"
+                            data-product-id="{{ product_color.id }}"
+                            data-tip="{% if product_color.in_wishlist %}Remove from Wishlist{% else %}Add to Wishlist{% endif %}">
+                        <i class="fa {% if product_color.in_wishlist %}fa-heart{% else %}fa-heart-o{% endif %}" aria-hidden="true"></i>
+                    </button>
+                    
+                </div>
+            </div>
+
+            <!--Content Section-->
+            <div class="col-lg-5 col-md-12 col-sm-11 content">
+                
+                <h1 class="itemTitle">{{ product.title }}</h1>
+
+                <p class="itemPrice">${{ product.price }}</p>
+                <p class="itemDescription">{{ product.description}}</p>
+                
+                <!-- Make a list of other buttons too that take us to other color variantions seemlessly-->
+                <!-- Color Selector -->
+                <div class="color-selector">
+                    <p>Choose a color:</p>
+                    <div class="color-buttons">
+                        {% for product_color_variant in all_product_colors %}
+                            <button
+                            class="color-button {% if product_color_variant.id == product_color.id %} selected {% endif %}
+                            {% if product_color_variant.total_product_color_stock <= 0 %} disabled {% endif %}"
+                            {% if product_color_variant.total_product_color_stock <= 0 %} disabled {% endif %}
+                            data-color="{{ product_color_variant.color.hex_code|default:'#ffffff' }}"
+                            data-product-id="{{ product_color_variant.id }}"
+                            data-product-url="{% url 'shop:shop_item' item_id=product_color_variant.id %}">
+                            <!-- Color name or image could be added here if necessary -->
+                            </button>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!--Empty div to prompt to choose size later -->
+                <div></div>
+                <!--Size buttons -->
+                <div class="size-options">
+                    {% for variant in variants %}
+                        <button 
+                            class="size-options-button 
+                            {% if variant.quantity <= 0 %} disabled {% endif %}
+                            {% if selected_size and selected_size == variant.size.id %} selected {% endif %}"
+                            {% if variant.quantity <= 0 %} disabled {% endif %}
+                            data-variant-id="{{ variant.id }}"
+                            data-size-id="{{ variant.size.id }}">
+                            {{ variant.size.name }}
+                        </button>
+                    {% endfor %}
+                </div>
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="error-message">
+                            <p>{{ message }}</p>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <!--Add to Cart button: CART IS NOT DEVELOPED YET-->
+                <form method="POST" action="{% url 'shop:add_to_cart' %}" class="button_form">
+                    {% csrf_token %}
+                    <input type="hidden" name="variant_id" id="selected_variant_id" value=""> <!--Value is set in js-->
+                    <input type="hidden" name="product_color_id" value="{{ product_color.id }}">
+                    <input type="hidden" name="quantity" value="1">
+                    <button type='submit' class="add-to-cart" name="addToCart">Add to Cart</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    <!--==============================================FOOTER================================================-->
+    {% include 'base/footer.html' %}
+    <!--====================================================END OF FOOTER=======================================-->
+    <!---------------------------------------CART---------------------------------->
+    {% include 'shop/cart.html' %}
+</body>
+</html>

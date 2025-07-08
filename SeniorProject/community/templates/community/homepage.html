@@ -1,0 +1,68 @@
+{% extends 'community/base.html' %}
+{% load static %}
+
+{% block title %}BELLE - Discover and Save Creative Ideas{% endblock %}
+
+{% block content %}
+<div class="masonry-container">
+    <div class="masonry-grid">
+        <!-- Sample pins - these would be populated from your Django views -->
+        {% for pin in pins %}
+            <div class="pin-item">
+                <div class="card pin-card">
+                    <a href="{% url 'community:post_detail' post_id=pin.id %}">
+                        <img src="{{ pin.get_image }}" class="card-img-top" alt="Fashion Design">
+                    </a>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ pin.title }}</h5>
+                        <div class="pin-footer d-flex justify-content-between align-items-center">
+                            {% if pin.category %}
+                            <small class="text-muted">{{ pin.category.name }}</small>
+                            {% endif %}
+                            <button class="btn save-btn {% if pin.is_saved %}saved{% endif %} {% if not pin.category %}ms-auto{% endif %} save-button" 
+                                data-post-id="{{ pin.id }}">
+                                <i class="bi {% if pin.is_saved %}bi-bookmark-check-fill{% else %}bi-bookmark-fill{% endif %} me-1"></i>{% if pin.is_saved %}Saved{% else %}Save{% endif %}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+        <div class="col-12 text-center py-5">
+            <div class="empty-state">
+                <i class="bi bi-images display-1 text-muted"></i>
+                <h3 class="mt-3">No posts found</h3>
+                <p class="text-muted">Be the first to create a post in this category!</p>
+                <a href="{% url 'community:create_post' %}" class="btn btn-primary mt-3">
+                    <i class="bi bi-plus-lg me-1"></i> Create Post
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<!-- Pagination controls -->
+{% if pins.has_other_pages %}
+<div class="load-more">
+    {% if pins.has_previous %}
+    <a href="?page={{ pins.previous_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> Previous
+    </a>
+    {% endif %}
+    
+    <span class="mx-3">
+        Page {{ pins.number }} of {{ pins.paginator.num_pages }}
+    </span>
+    
+    {% if pins.has_next %}
+    <a href="?page={{ pins.next_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}" class="btn btn-outline-primary">
+        Next <i class="bi bi-arrow-right"></i>
+    </a>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'community/js/save_posts.js' %}"></script>
+{% endblock %}

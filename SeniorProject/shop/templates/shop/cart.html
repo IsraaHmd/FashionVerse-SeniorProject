@@ -1,0 +1,129 @@
+<!--====================================================CART==========================================-->
+<!-- The offcanvas is available in every page of the shop, the data is gotten in context_processors, so that we can open the cart in any template-->
+<div class="offcanvas offcanvas-end custom-offcanvas" data-bs-scroll="false" tabindex="-1" id="offcanvasCart" aria-labelledby="My Cart" aria-modal="true" role="dialog">
+  {% if user.is_authenticated %}
+    <div class="offcanvas-header d-flex align-items-start">
+        <h4 class="d-flex justify-content-between align-items-center mt-3 mb-0 ms-2">
+            <span class="cart-header">Cart</span>
+            <span class="badge badge-black rounded-circle ms-2">{{ cart_total_quantity }}</span>
+        </h4>
+        <button type="button" class="btn-close ms-auto" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div class="order-md-last">
+        <!--BODY-->
+        <!--Could add svg in the background later-->
+        {% if cart_message %}
+          <div class="alert cart-message text-danger d-flex justify-content-between align-items-center">
+            <span>{{ cart_message }}</span>
+            <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endif %}
+        <ul class="list-group mb-3">
+          {% if cart_items %}
+            {% for item in cart_items %}
+              <li class="list-group-item d-flex flex-wrap justify-content-between lh-sm" data-item-id="{{ item.id }}">
+                  <!-- Left: product image -->
+                  <div class="col-2">
+                    <img src="{{ item.product_variant.product_color.get_image }}" class="img-fluid rounded-3" alt="Product Image">
+                  </div>
+                  
+                  <!-- Right: product details -->
+                  <div class="col-9">
+                    <!-- Title and Remove link in one row -->
+                    <div class="d-flex justify-content-between align-items-start mb-1">
+                      <h6 class="my-0">{{ item.product_variant.product.title }}</h6>
+                      <!-- Update in your cart.html template -->
+                      <a href="{% url 'shop:remove_from_cart' item.id %}" class="text-decoration-none text-secondary">Remove</a>
+                    </div>
+                    
+                    <!-- Color -->
+                    <p class="text-secondary mb-1">{{ item.product_variant.product_color.color.name }}</p>
+                    
+                    <!-- Price -->
+                    <p class="mb-3">${{ item.product_variant.product.price }}</p>
+                    
+                    <!-- Size dropdown and quantity controls in one row -->
+                    <div class="d-flex align-items-center">
+                      <!-- Size dropdown -->
+                      <div class="dropdown me-3">
+                        <button class="form-select sizeDropdown" type="button" id="sizeDropdown-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
+                          {{ item.product_variant.size.name }}
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="sizeDropdown">
+                          {% for variant in item.available_sizes %}
+                            <li>
+                              <form method="post" action="{% url 'shop:update_cart_size' item.id %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                                <input type="hidden" name="variant_id" value="{{ variant.id }}">
+                                <button type="submit" class="dropdown-item">{{ variant.size.name }}</button>
+                              </form>
+                            </li>
+                          {% endfor %}
+                        </ul>
+                        <!-- Before
+                        <ul class="dropdown-menu" aria-labelledby="sizeDropdown">
+                          {% for variant in item.available_sizes %}
+                            <li>
+                              <a class="dropdown-item size-option" href="#" 
+                              data-item-id="{{ item.id }}" 
+                              data-variant-id="{{ variant.id }}">
+                              {{ variant.size.name }}
+                              </a>
+                            </li>
+                          {% endfor %}
+                        </ul>
+                      -->
+                      </div>
+                      
+                      <!-- Quantity controls -->
+                      <div class="input-group">
+                        <button class="btn btn-outline-secondary" type="button">−</button>
+                        <input type="text" class="form-control text-center quanity-value"  value="{{ item.quantity }}" data-item-id="{{ item.id }}" min="1" max="{{ item.product_variant.quantity }}">
+                        <button class="btn btn-outline-secondary" type="button">+</button>
+                      </div>
+                    </div>
+                  </div>
+              </li>
+              {% endfor %}
+              
+              <li class="list-group-item d-flex justify-content-between totalPrice">
+                <span>Total (USD)</span>
+                <strong>${{ total }}</strong>
+              </li> 
+              
+              {% else %}
+                <li class="list-group-item text-center py-5">
+                    <p class="mb-3">Your cart is empty</p>
+                </li>
+              {% endif %}
+        </ul>
+        {% if cart_items %}
+        <button class="cartButton w-100 btn btn-lg" data-url="{% url 'shop:checkout' %}" onclick="location.href=this.dataset.url;">Continue to Checkout</button>
+        {% endif %}
+        <button class="cartButton w-100 btn btn-lg" data-url="{% url 'shop:shop' %}" onclick="location.href=this.dataset.url;">Back to shopping</button>
+        <!--Note that I can use <a href="shop.php" class="cartButton w-100 btn-lg">Back to Shopping</a> too-->
+      </div>
+    </div>
+  {% else %}
+    <!--User is not logged in -->
+    <div class="offcanvas-header d-flex align-items-start">
+      <h4 class="d-flex justify-content-between align-items-center mt-3 mb-0 ms-2">
+          <span class="cart-header">Cart</span>
+      </h4>
+      <button type="button" class="btn-close ms-auto" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <!--Not logged in: body-->
+    <div class="offcanvas-body">
+      <div class="order-md-last">
+        <ul class="list-group mb-3">
+            <li class='list-group-item'>Please log in to view your cart.</li>
+        </ul>
+        <button class="cartButton w-100 btn btn-lg" data-url="{% url 'users:login' %}" onclick="location.href=this.dataset.url;">Login</button>
+        <button class="cartButton w-100 btn btn-lg" data-url="{% url 'shop:shop' %}" onclick="location.href=this.dataset.url;">Back to shopping</button>
+      </div>
+    </div>
+  {% endif %}  
+</div>
+<!--====================================================END OF CART==========================================-->

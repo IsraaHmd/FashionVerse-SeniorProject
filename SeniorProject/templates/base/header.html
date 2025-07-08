@@ -1,0 +1,165 @@
+<!--Header without a video-->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const mobileNavToggleBtn = document.querySelector('.mobile-nav-toggle');
+        const body = document.querySelector('body');
+        const headerMenuContainer = document.querySelector('.header-menu-container')
+        
+        function mobileNavToggle() {
+            body.classList.toggle('mobile-nav-active');  //add/remove the mobile-nav-active class to show/hide the mobile menu
+            mobileNavToggleBtn.classList.toggle('bi-list');  
+            mobileNavToggleBtn.classList.toggle('bi-x'); 
+            headerMenuContainer.classList.toggle('header-menu-container-nav-active'); 
+        }
+        //call the function when the button is clicked:
+        mobileNavToggleBtn.addEventListener('click', mobileNavToggle);
+        //mobile menu closes when a navigation link is clicked:
+        document.querySelectorAll('#navmenu a').forEach(navmenuItem => {
+            navmenuItem.addEventListener('click', () => {
+                if (body.classList.contains('mobile-nav-active')) {
+                    mobileNavToggle();
+                }
+            });
+        });
+
+    //Search
+    const searchTrigger = document.getElementById('searchTrigger');
+    const searchOverlay = document.getElementById('searchOverlay');
+    const searchClose = document.getElementById('searchClose');
+    const searchInput = document.getElementById('searchInput');
+    
+    // Open search overlay
+    searchTrigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        searchOverlay.style.display = 'flex';
+        
+        // Delay to allow the display:flex to take effect before adding active class
+        setTimeout(() => {
+            searchOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
+            searchInput.focus(); // Focus the input
+        }, 10);
+    });
+    
+    // Close search overlay
+    searchClose.addEventListener('click', () => {
+        closeSearchOverlay();
+    });
+    
+    // Close when clicking outside search box on mobile
+    searchOverlay.addEventListener('click', (e) => {
+        if (e.target === searchOverlay && window.innerWidth < 1200) {
+            closeSearchOverlay();
+        }
+    });
+    
+    // Function to close the search overlay
+    function closeSearchOverlay() {
+        searchOverlay.classList.remove('active');
+        
+        // Wait for the transition to complete before hiding the overlay
+        setTimeout(() => {
+            searchOverlay.style.display = 'none';
+            document.body.style.overflow = ''; // Restore scrolling
+        }, 300);
+    }
+    
+    // Close on escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && searchOverlay.style.display === 'flex') {
+            closeSearchOverlay();
+        }
+    });
+    
+    // Form submission
+    searchInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            const query = searchInput.value.trim();
+            if (query) {
+                window.location.href = `/search/?q=${encodeURIComponent(query)}`;
+            }
+        }
+    });
+    //---------------------------------------- End of Search
+});
+ 
+</script>
+
+
+<header class="header-container">
+    <div class="header-menu-container">
+        <!-- Logo on the left -->
+        <div>
+                <a href="{% url 'shop:index' %}" class="logo classicFontStyle headerElement">BELLE</a>
+        </div>
+        
+        <!-- Navigation links in the middle -->
+        <nav class="nav-links">
+            <a href="{% url 'shop:shop' %}" class="header-link header-font headerElement raleway">SHOP</a>
+            <a href="{% url 'shop:contactus' %}" class="header-link header-font headerElement raleway">CONTACT US</a>
+            <a href="{% url 'shop:aboutus' %}" class="header-link header-font headerElement raleway">OUR WORLD</a>
+            <a href="{% url 'community:homepage' %}" class="header-link header-font headerElement raleway">#BELLESCommunity</a>
+            <a href="#" id="cart-link" class="header-link header-font headerElement raleway" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">CART</a>
+        </nav>
+
+        
+        <nav class="header__secondary-nav" aria-label="Secondary navigation">      
+            <!--Search link -->
+            <a href="#" class="headerElement headerIconLink" id="searchTrigger">
+                <i class="bi bi-search headerIcon"></i>
+            </a>
+            <!--Wishlist-->
+            <a href="{% url 'shop:wishlist' %}" class="headerElement headerIcon headerIconLink">
+                <i class="fa fa-heart-o headerIcon"></i>
+            </a>
+            <!--Login/Register-->
+            <a href="{% url 'users:login' %}" class="headerElement headerIconLink">
+                <i class="bi bi-person headerIcon"></i>
+            </a>
+        </nav>
+        <!--Nav menu for small screen -->
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i> <!-- Hamburger Icon -->
+        <!-- Mobile Nav Menu -->
+        <div id="navmenu" class="navmenu">
+            <ul>
+                <li><a href="{% url 'shop:index' %}" class="header-font raleway">HOME</a></li>
+                <li><a href="{% url 'shop:shop' %}" class="header-font raleway">SHOP</a></li>
+                <li><a href="{% url 'shop:contactus' %}" class="header-font raleway">CONTACT US</a></li>
+                <li><a href="{% url 'shop:aboutus' %}" class="header-font raleway">OUR WORLD</a></li>
+                <li><a href="{% url 'community:homepage' %}" class="header-font raleway">#BELLESCommunity</a></li>
+                <li><a href="#" id="cart-link" class="header-font raleway" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">CART</a></li>
+            </ul>
+        </div>
+    </div>
+   <!-- Search Overlay -->
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-container">
+        <div class="search-input-wrapper">
+            <input type="text" class="search-input" id="searchInput" placeholder="Search...">
+            <div class="search-close" id="searchClose">&times;</div>
+        </div>
+        </div>
+    </div>
+</header>
+
+   <!--
+        Future Ideas
+    <a href="#" class="headerElement book-appointment">BOOK APPOINTMENT</a>-->
+            <!-- Favorites/ wishlist-->
+             <!-- SEARCH ICON: above the code of  login icon
+            <a href="#" aria-controls="header-search-sections--21546399990045__header" class="headerElement headerIconLink">
+                <svg aria-hidden="true" fill="none" focusable="false" width="24" class="headerIcon" viewBox="0 0 24 24">
+                <path d="M10.364 3a7.364 7.364 0 1 0 0 14.727 7.364 7.364 0 0 0 0-14.727Z" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"></path>
+                <path d="M15.857 15.858 21 21.001" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"></path>
+            </svg>
+            </a>
+
+        Human icon:
+        <a href="{% url 'users:login' %}" class="headerElement headerIcon headerIconLink">
+                <svg aria-hidden="true" fill="none" focusable="false" width="24" class="headerIcon" viewBox="0 0 24 24">
+                <path d="M16.125 8.75c-.184 2.478-2.063 4.5-4.125 4.5s-3.944-2.021-4.125-4.5c-.187-2.578 1.64-4.5 4.125-4.5 2.484 0 4.313 1.969 4.125 4.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M3.017 20.747C3.783 16.5 7.922 14.25 12 14.25s8.217 2.25 8.984 6.497" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"></path>
+                </svg>
+            </a>
+    -->

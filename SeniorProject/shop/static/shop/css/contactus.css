@@ -1,0 +1,119 @@
+.wholeContainer{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.ourTitle{
+    padding-top: 2.25rem;
+    line-height: 2;
+    font-weight: 400;
+    font-family: "New York", Iowan Old Style, Apple Garamond, Baskerville, Times New Roman, Droid Serif, Times, Source Serif Pro, serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+    letter-spacing: 0.06em;
+    font-size: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.75rem;
+}
+
+.line1{
+    font-style: italic;
+}
+.line2{
+    font-size: 32px;
+}
+/*------------------form---------------*/
+.formCont{
+    width:45%;
+}
+.pageForm {
+    display: grid; /* Enables grid layout for form elements */
+    gap: 1rem; /* Adds 10px space between input fields and the button */
+    width:100%;
+    margin-bottom: 20px;
+}
+
+.fontUsed{
+    font-weight: 400;
+    font-family: "Univers Next", sans-serif;
+    letter-spacing: 0.06em;
+    font-size: 14px;
+}
+
+.button-contactus {
+    --initial-gradient: linear-gradient(rgb(0, 0, 0), rgb(0, 0, 0)); /* Black background by default */
+    --hover-gradient: linear-gradient(rgb(255, 255, 255), rgb(255, 255, 255)); /* White background on hover */
+    --initial-background-position: right;
+    --hover-background-position: left;
+    -webkit-appearance: none;
+    appearance: none;
+    font: inherit;
+    width: 100%; /* Full width */
+    max-width: 100%; /* Prevent overflow */
+    text-shadow: none;
+    text-align: center;
+    cursor: pointer;
+    color: white; /* White text by default */
+    border: 1px solid black; /* Black border */
+    border-radius: 0px;
+    background-color: transparent; /* Transparent background */
+    background-image: var(--initial-gradient), var(--hover-gradient);
+    background-size: 100% 100%, 0 100%;
+    background-position: var(--initial-background-position);
+    background-repeat: no-repeat;
+    justify-content: center;
+    align-items: center;
+    padding: .65rem 1.75rem; /* Adjust padding to maintain width */
+    transition: background-size .45s cubic-bezier(.785,.135,.15,.86), background-position .45s step-end, color .45s cubic-bezier(.785,.135,.15,.86), border .45s cubic-bezier(.785,.135,.15,.86);
+    display: inline-flex;
+    position: relative;
+    box-sizing: border-box;
+}
+
+/* Hover effect */
+.button-contactus:hover {
+    background-size: 0 100%, 100% 100%; /* Swap background size on hover */
+    background-position: var(--hover-background-position);
+    color: black; /* Change text color to black on hover */
+    border-color: black; /* Keep border color black on hover */
+}
+
+.form-control {
+    border-color: lightgrey; /* Custom border color */
+    border-radius: 0px; /* Custom border radius */
+    padding: 0.65rem 0.8rem;
+    box-shadow: none; /* Removes any default shadow */
+    transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Smooth transition effect */
+    font-size: 14px;
+}
+
+.form-control:focus {
+    border-color: black; /* Custom border color on focus */
+    box-shadow: none;
+}
+
+.infoCont{
+    margin: 30px;
+    font-weight: 400;
+    font-family: "New York", Iowan Old Style, Apple Garamond, Baskerville, Times New Roman, Droid Serif, Times, Source Serif Pro, serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+    letter-spacing: 0.06em;
+    font: 14px;
+    display: grid; /* Enables grid layout for form elements */
+    gap: 5px; /* Adds 10px space between input fields and the button */
+    text-align: center;
+}
+
+/*-----------------------------Responsiveness----------------------*/
+@media screen and (max-width: 991px) {
+    /* form */
+    .formCont{
+        width:75%;
+    }
+    .column1{
+        margin-bottom: 10px;
+    }
+}

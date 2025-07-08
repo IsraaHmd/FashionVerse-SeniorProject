@@ -1,0 +1,316 @@
+/* Common Styles */
+:root {
+    --belle-red: #C1121F;
+    --belle-light-gray: #f0f0f0;
+    --belle-dark-gray: #767676;
+    --belle-black: #111;
+    --belle-white: #fff;
+    --sidebar-width: 74px;
+    --sidebar-width-small: 60px;
+    --header-height: 70px;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: var(--belle-white);
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+a, a:hover{
+    text-decoration: none;
+}
+/* Layout Structure */
+.main-content {
+    margin-left: var(--sidebar-width);
+    padding-top: var(--header-height);
+    width: calc(100% - var(--sidebar-width));
+    min-height: 100vh;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.content-wrapper {
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Left Sidebar */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: var(--sidebar-width);
+    background-color: var(--belle-white);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1020;
+    border-right: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.sidebar-logo {
+    margin: 16px 0;
+    width: 100%;
+    text-align: center;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.sidebar-item {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 8px 0;
+    color: var(--belle-dark-gray);
+    transition: background-color 0.2s;
+    text-decoration: none;
+}
+
+.sidebar-item:hover, .sidebar-item.active {
+    background-color: var(--belle-light-gray);
+    color: var(--belle-black);
+}
+
+.sidebar-item.active {
+    color: var(--belle-black);
+    font-weight: bold;
+}
+
+/* Header / Navbar */
+.fixed-top {
+    position: fixed;
+    top: 0;
+    margin-left: var(--sidebar-width);
+    width: calc(100% - var(--sidebar-width));
+    box-sizing: border-box;
+    box-shadow:none;
+    background-color: var(--belle-white);
+    z-index: 1010;
+    padding: 15px;
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+}
+
+/*Belle logo*/
+.belle-shop, .belle-shop:hover {
+    font-size: 1rem;
+    text-decoration: none;
+    color: var(--belle-black);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Go back to shop Styling */
+.belle-logo, .belle-logo:hover {
+    font-size: 18px;
+    color: var(--belle-red);
+    text-decoration: none;
+}
+
+.classicFontStyle {
+    font-family: "New York", Iowan Old Style, Apple Garamond, Baskerville, Times New Roman, Droid Serif, Times, Source Serif Pro, serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    line-height: 1.6;
+}
+
+/* Search Bar */
+.search-container {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.search-input {
+    background-color: var(--belle-light-gray);
+    border-radius: 24px;
+    border: none;
+    padding-left: 40px;
+    height: 48px;
+    width: 100%;
+}
+
+.search-input:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+.search-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--belle-dark-gray);
+}
+
+/* Profile Avatar */
+.profile-circle {
+    width: 32px;
+    height: 32px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+/* Masonry Grid */
+.masonry-container {
+    padding: 15px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.masonry-grid {
+    columns: 5 200px;
+    column-gap: 15px;
+    width: 100%;
+}
+
+.pin-item {
+    break-inside: avoid;
+    margin-bottom: 16px;
+}
+
+.pin-card {
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.3s;
+    border: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+.pin-card:hover {
+    transform: scale(0.98);
+}
+
+.pin-card img {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.card-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.pin-footer {
+    margin-top: 8px;
+}
+
+.save-btn {
+    background-color: var(--belle-red);
+    color: white;
+    border-radius: 24px;
+    font-weight: 600;
+    padding: 6px 16px;
+    font-size: 14px;
+}
+
+.save-btn:hover {
+    background-color: var(--belle-red);
+    color: white;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .masonry-grid {
+        columns: 4 180px;
+    }
+}
+
+@media (max-width: 992px) {
+    .masonry-grid {
+        columns: 3 160px;
+    }
+}
+
+@media (max-width: 768px) {
+    .masonry-grid {
+        columns: 2 140px;
+    }
+    
+    .fixed-top {
+        padding: 10px;
+    }
+    
+    .belle-logo, .belle-logo:hover {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 576px) {
+    :root {
+        --sidebar-width: var(--sidebar-width-small);
+    }
+    
+    .sidebar {
+        width: var(--sidebar-width-small);
+    }
+    
+    .fixed-top {
+        margin-left: var(--sidebar-width-small);
+        width: calc(100% - var(--sidebar-width-small));
+        padding: 8px;
+    }
+    
+    .main-content {
+        margin-left: var(--sidebar-width-small);
+        width: calc(100% - var(--sidebar-width-small));
+    }
+    
+    .masonry-grid {
+        columns: 2 120px;
+        column-gap: 5px;
+    }
+    
+    .sidebar-item {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .search-input {
+        height: 40px;
+    }
+    
+    .belle-logo, .belle-logo:hover {
+        font-size: 14px;
+    }
+    .masonry-container{
+        padding: 15px 0px;
+    }
+    .content-wrapper{
+        padding: 20px 5px;
+    }
+}
+
+/* Create post tooltip styling */
+.tooltip .tooltip-inner {
+    background-color: var(--belle-black);
+    color: var(--belle-white);
+    padding: 8px 12px;
+    font-size: 12px;
+}
+
+.tooltip .tooltip-arrow::before {
+    border-right-color: var(--belle-black);
+}

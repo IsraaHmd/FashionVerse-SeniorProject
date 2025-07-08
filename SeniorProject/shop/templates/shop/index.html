@@ -1,0 +1,378 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BELLE</title>
+
+    <!--Font: Raleway-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!--Bootsrap 5-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- FontAwesome 4.x CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!--CUSTOM CSS-->
+    <link rel="stylesheet" href="{% static 'shop/css/indexstyle.css' %}">
+    <link rel="stylesheet" href="{% static 'css/footer.css' %}">  
+    <link rel="stylesheet" href="{% static 'shop/css/cart.css' %}">
+    <script src="{% static 'shop/js/index.js' %}"></script>
+    <script src="{% static 'shop/js/cart.js' %}"></script>
+    <script src="{% static 'shop/js/wishlist.js' %}"></script>
+    <!--chatbot-->
+    <script defer src="https://app.fastbots.ai/embed.js" data-bot-id="cmalkfyek018crilyk5j4m42m"></script>
+
+</head>
+<body>
+  <!--Svg for the arrow in the lastest shop items -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+      <symbol xmlns="http://www.w3.org/2000/svg" id="arrow-left" viewBox="0 0 32 32">
+        <path fill="currentColor" d="m13.281 6.781l-8.5 8.5l-.687.719l.687.719l8.5 8.5l1.438-1.438L7.938 17H28v-2H7.937l6.782-6.781z"></path>
+      </symbol>
+      <symbol xmlns="http://www.w3.org/2000/svg" id="arrow-right" viewBox="0 0 32 32">
+        <path fill="currentColor" d="M18.719 6.781L17.28 8.22L24.063 15H4v2h20.063l-6.782 6.781l1.438 1.438l8.5-8.5l.687-.719l-.687-.719z"></path>
+      </symbol>
+    </svg>
+    <header class="header-container"> <!--container fluid decreased its width-->
+        <!-- BACK GROUND VIDEO -->
+        <video autoplay="true" muted loop id="background-video" class="w-100 h-100" preload="auto" playsinline>
+            <source id="video-source" src="https://videos.pexels.com/video-files/5822850/5822850-hd_1920_1080_25fps.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        
+        <!-- TOP OF THE HEADER CONTENTS-->
+        <div class="header-menu-container">
+            <!-- Logo on the left -->
+            <div>
+                <a href="{% url 'shop:index' %}" class="logo headerElement classicFontStyle">BELLE</a>
+            </div>
+
+            <!-- Navigation links in the middle -->
+            <nav class="nav-links">
+                <a href="{% url 'shop:shop' %}" class="header-font headerElement raleway">SHOP</a>
+                <a href="{% url 'shop:contactus' %}" class="header-font headerElement raleway">CONTACT US</a>
+                <a href="{% url 'shop:aboutus' %}" class="header-font headerElement raleway">OUR WORLD</a>
+                <a href="{% url 'community:homepage' %}" class="header-link header-font headerElement raleway">#BELLESCommunity</a>
+                <a href="#" id="cart-link" class="header-font headerElement raleway" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">CART</a>
+            </nav>
+
+            
+            <nav class="header__secondary-nav" aria-label="Secondary navigation">
+              <!--Search link -->
+              <a href="#" class="headerElement headerIconLink" id="searchTrigger">
+                  <i class="bi bi-search headerIcon"></i>
+              </a>
+              <!--Wishlist-->
+              <a href="{% url 'shop:wishlist' %}" class="headerElement headerIcon headerIconLink">
+                  <i class="fa fa-heart-o headerIcon"></i>
+              </a>
+              <!--Login/Register-->
+              <a href="{% url 'users:login' %}" class="headerElement headerIconLink">
+                  <i class="bi bi-person headerIcon"></i>
+              </a>
+              <!--
+                <a href="{% url 'users:login' %}" class="headerElement headerIcon headerIconLink">
+                    <svg aria-hidden="true" fill="none" focusable="false" width="24" class="headerIcon" viewBox="0 0 24 24">
+                    <path d="M16.125 8.75c-.184 2.478-2.063 4.5-4.125 4.5s-3.944-2.021-4.125-4.5c-.187-2.578 1.64-4.5 4.125-4.5 2.484 0 4.313 1.969 4.125 4.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M3.017 20.747C3.783 16.5 7.922 14.25 12 14.25s8.217 2.25 8.984 6.497" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"></path>
+                    </svg>
+                </a>
+              -->
+            </nav>
+            <!--Nav menu for small screen -->
+            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i> <!-- Hamburger Icon -->
+            <!-- Mobile Nav Menu -->
+            <div id="navmenu" class="navmenu">
+                <ul>
+                    <li><a href="{% url 'shop:index' %}" class="header-font headerElement raleway">HOME</a></li>
+                    <li><a href="{% url 'shop:shop' %}"" class="header-font headerElement raleway">SHOP</a></li>
+                    <li><a href="{% url 'shop:contactus' %}" class="header-font headerElement raleway">CONTACT US</a></li>
+                    <li><a href="{% url 'shop:aboutus' %}" class="header-font headerElement raleway">OUR WORLD</a></li>
+                    <li><a href="{% url 'community:homepage' %}" class="header-font headerElement raleway">#BELLESCommunity</a></li>
+                    <li><a href="#" id="cart-link" class="header-font headerElement raleway" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">CART</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="search-overlay" id="searchOverlay">
+          <div class="search-container">
+            <div class="search-input-wrapper">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search...">
+                <div class="search-close" id="searchClose">&times;</div>
+            </div>
+          </div>
+        </div>
+    </header>
+  <main>
+    
+    <!--=================================================Latest Products============================-->
+    <!-- Featured Products Section -->
+    <!-- Featured Products Section -->
+    <section class="featured-products-section">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- Carousel - Left Side -->
+          <div class="col-lg-5">
+            <div class="athletics-carousel">
+              <div class="carousel-container">
+                <div class="carousel-inner">
+                  <!-- Slide 1 -->
+                  <div class="carousel-item active">
+                    <img src="{% static 'shop/images/c1.png' %}" alt="Athletic woman running" class="img-fluid">
+                    <div class="carousel-caption">
+                      <h2>CLASSY, ELEGANT,<br>AND COMFORTABLE!</h2>
+                      <a href="{% url 'shop:shop' %}" class="shop-all-btn">
+                        Visit Our Shop
+                        <svg class="arrow-icon">
+                          <use xlink:href="#arrow-right"></use>
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
+                  
+                  <!-- Slide 2 -->
+                  <div class="carousel-item">
+                    <img src="{% static 'shop/images/c2.png' %}" alt="Athletic woman on stairs" class="img-fluid">
+                    <div class="carousel-caption">
+                      <h2><br>FIND YOUR STYLE</h2>
+                      <a href="{% url 'shop:shop' %}" class="shop-all-btn">
+                        Visit Our Shop
+                        <svg class="arrow-icon">
+                          <use xlink:href="#arrow-right"></use>
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
+                  
+                  <!-- Slide 3 -->
+                  <div class="carousel-item">
+                    <img src="{% static 'shop/images/c3.png' %}" alt="Athletic woman standing" class="img-fluid">
+                    <div class="carousel-caption">
+                      <h2>WHERE EVERYONE<br>BELONGS</h2>
+                      <a href="{% url 'shop:shop' %}" class="shop-all-btn">
+                        Visit Our Shop
+                        <svg class="arrow-icon">
+                          <use xlink:href="#arrow-right"></use>
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Carousel controls -->
+                <div class="carousel-indicators">
+                  <div class="carousel-indicator active" data-index="0"></div>
+                  <div class="carousel-indicator" data-index="1"></div>
+                  <div class="carousel-indicator" data-index="2"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--right side -->
+          <div class="col-lg-7">
+            <div class="recent-products">
+              <h2 class="section-title classicFontStyle">LATEST ARRIVALS</h2>
+              <div class="products-grid">
+                <div class="row">
+                  {% for product_color in recent_product_colors %}
+                  <!-- Product {{ forloop.counter }} -->
+                  <div class="col-md-6">
+                    <div class="product-card">
+                      <div class="product-image">
+                        {% if product_color.get_image %}
+                          <img src="{{ product_color.get_image }}" alt="{{ product_color.product.title }}" class="img-fluid">
+                        {% else %}
+                          <img src="{% static 'shop/images/placeholder.png' %}" alt="{{ product_color.product.title }}" class="img-fluid">
+                        {% endif %}
+                        <div class="product-buttons">
+                          <button class="favorite-btn {% if product_color.in_wishlist %}in-wishlist{% endif %}" 
+                                  data-product-id="{{ product_color.id }}" 
+                                  data-tip="{% if product_color.in_wishlist %}Remove from Wishlist{% else %}Add to Wishlist{% endif %}">
+                            <i class="fa {% if product_color.in_wishlist %}fa-heart{% else %}fa-heart-o{% endif %}"></i>
+                          </button>
+                          <button class="quick-view" 
+                                data-product-url="{% url 'shop:shop_item' item_id=product_color.id %}">
+                            <i class="bi bi-eye"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="product-info">
+                        <h4 class="product-title">{{ product_color.product.title }}</h4>
+                        <p class="product-color">{{ product_color.color.name }}</p>
+                        <p class="product-price">${{ product_color.product.price }} USD</p>
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+                <div class="view-all-container">
+                  <a href="{% url 'shop:shop' %}" class="b-and-w-Button btn">SHOP ALL PRODUCTS</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+    <!--=================================================End Latest Products============================-->
+    <!--================================================ ABOUT US==============================-->
+    <section id="about" class="about section">
+
+      <div class="container">
+
+        <div class="row gy-4">
+          <div class="col-lg-6 order-1 order-lg-2">
+            <img src="{% static 'shop/images/screen.png' %}" class="about-img img-fluid" alt="">
+          </div>
+          <div class="col-lg-6 order-2 order-lg-1 aboutUsContent">
+            <h3 class="classicFontStyle">ABOUT US</h3>
+            <p class="paragraphsFont">
+              At BELLE, we celebrate every woman’s unique style with a diverse collection that embodies elegance in every look. From modern and chic to vintage and bold, our fashion pieces are designed to match every taste. Experience affordable luxury where your individuality shines—because at BELLE, style is for everyone.
+            </p>
+            <button class="b-and-w-Button w-100 btn btn-lg" onclick="location.href='/aboutus/';">Read More About Our World</button>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+    <!--================================================ End of About us ==============================-->
+    <!--==========================Testimonials=-===========================-->
+    <div class="section-test no-padding">
+      <div class="background-wrapper">
+        <div class="background-image testimonial-background">
+          <!--Change object-fit: cover; to object-fit: contain; if you want the image not to stretch to the width of the wraper-->
+          <img src="{% static 'shop/images/testimg2.png' %}" alt="Testimonial background" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;">
+          <div class="overlay bottom-gradient"></div>
+        </div>
+      </div>
+      <div class="testimonial-slider">
+        <div class="w-slider-mask">
+          <!-- Testimonial 1 -->
+          <div class="testimonial-slide" data-index="0">
+            <div class="testimonial-content">
+              <h2 class="testimonial-text">"I finally found pieces that match my style—effortlessly chic and timeless."</h2>
+              <div class="testimonial-client">
+                <!--
+                  <div class="client-avatar">
+                    <div class="avatar one"></div>
+                  </div>
+                -->
+                <div class="testimonial-name">
+                  <h4>Sarah Pratt</h4>
+                  <!--<div class="subtitle light">Delta Airlines</div>-->
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Testimonial 2 -->
+          <div class="testimonial-slide hidden" data-index="1">
+            <div class="testimonial-content">
+              <h2 class="testimonial-text">"It’s more than shopping—it’s a space where elegance meets identity."</h2>
+              <div class="testimonial-client">
+                <!--
+                  <div class="client-avatar">
+                    <div class="avatar one"></div>
+                  </div>
+                -->
+                <div class="testimonial-name">
+                  <h4>Claire M.</h4>
+                  <!--<div class="subtitle light">Walt Disney</div>-->
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Testimonial 3 -->
+          <div class="testimonial-slide hidden" data-index="2">
+            <div class="testimonial-content">
+              <h2 class="testimonial-text">"The quality is unmatched, and I like seeing other's styles in #BELLESCommunity."</h2>
+              <div class="testimonial-client">
+                <!--
+                  <div class="client-avatar">
+                    <div class="avatar one"></div>
+                  </div>
+                -->
+                <div class="testimonial-name">
+                  <h4>Sydney I.</h4>
+                  <!--<div class="subtitle light">Airtable</div>-->
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Testimonial 4 -->
+          <div class="testimonial-slide hidden" data-index="3">
+            <div class="testimonial-content">
+              <h2 class="testimonial-text">"Every item tells a story—mine begins with confidence and silk."</h2>
+              <div class="testimonial-client">
+                <!--
+                  <div class="client-avatar">
+                    <div class="avatar one"></div>
+                  </div>
+                -->
+                <div class="testimonial-name">
+                  <h4>Feline S.</h4>
+                  <!--<div class="subtitle light">Pixar Studios</div>-->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Prev/Next arrows -->
+        <div class="slider-arrow left" role="button" aria-label="previous slide">
+          <div class="arrow-mouse-over">
+            <div class="button-text light">PREV</div>
+          </div>
+        </div>
+        <div class="slider-arrow w-slider-arrow-right" role="button" aria-label="next slide">
+          <div class="arrow-mouse-over">
+            <div class="button-text rotate-opposite light">NEXT</div>
+          </div>
+        </div>
+  
+        <!-- Navigation dots -->
+        <div class="testimonial-slide-nav">
+          <div class="w-slider-dot w-active" data-index="0" role="button" aria-label="Show slide 1 of 4"></div>
+          <div class="w-slider-dot" data-index="1" role="button" aria-label="Show slide 2 of 4"></div>
+          <div class="w-slider-dot" data-index="2" role="button" aria-label="Show slide 3 of 4"></div>
+          <div class="w-slider-dot" data-index="3" role="button" aria-label="Show slide 4 of 4"></div>
+        </div>
+      </div>
+    </div>
+    <!--==========================End of testimonials======================-->
+      <!--================================================CALL TO ACRION==============================-->
+    <section id="call-to-action" class="call-to-action section dark-background">
+
+      <img src="{% static 'shop/images/h8.png' %}" alt="">
+
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-xl-10 col-sm-12">
+            <div class="text-center ContactUsText">
+              <h3 class="raleway">Have Questions Or Comments?</h3>
+              <a class="cta-btn raleway" href="{% url 'shop:contactus' %}">CONTACT US</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+      <!--================================================End of CALL TO ACRION==============================-->
+  </main>
+    <!--====================================================FOOTER============================================-->
+    {% include 'base/footer.html' %}
+    
+    <!--====================================================END OF FOOTER=======================================-->
+    {% include 'shop/cart.html' %}
+    
+</body>
+</html>

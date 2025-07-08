@@ -1,0 +1,208 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+
+    <!--Font: Raleway-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!--Bootstrap 5-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <!--Custom css-->
+    <link rel="stylesheet" href="{% static 'shop/css/checkout.css' %}">
+    <!--Custom js-->
+    <script src="{% static 'shop/js/checkout.js' %}"></script>
+    <!--Chatbot-->
+    <script defer src="https://app.fastbots.ai/embed.js" data-bot-id="cmalkfyek018crilyk5j4m42m"></script>
+</head>
+<body>
+    <div class="container checkout-container">
+        <div class="row mb-4">
+            <div class="col-12 d-flex align-items-center">
+                <a href="{% url 'shop:shop' %}" class="back-button me-auto">
+                    <i class="bi bi-arrow-left me-2"></i> Back to Shop
+                </a>
+                <h1 class="font_header text-center flex-grow-1 me-5">CHECKOUT</h1>
+            </div>
+        </div>
+        
+        {% if messages %}
+        <div class="row mb-4">
+            <div class="col-12">
+                {% for message in messages %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        
+        {% if not cart_items %}
+        <div class="row">
+            <div class="col-12 text-center">
+                <p>Your cart is empty. Can't checkout an empty cart.</p>
+                <a href="{% url 'shop:shop' %}" class="btn custom-button mt-3">Go back to shop</a>
+            </div>
+        </div>
+        {% else %}
+        <form id="checkoutForm" method="POST" action="{% url 'shop:place_order' %}" novalidate>
+            {% csrf_token %}
+            <div class="row">
+                <!-- Order Information Form -->
+                <div class="col-md-6">
+                    <div class="form-container">
+                        <h2 class="font_header">Your Information</h2>
+                        
+                        <div class="user-info">
+                            <p><span class="user-info-label">Email:</span> {{ user.email }}</p>
+                            <p><span class="user-info-label">Username:</span> {{ user.username }}</p>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="firstName" class="form-label">First Name*</label>
+                                <input type="text" class="form-control {% if form_errors.first_name %}invalid-field{% endif %}" 
+                                    id="firstName" name="first_name" value="{{ form_data.first_name|default:user.first_name }}" required>
+                                {% if form_errors.first_name %}
+                                    <div class="error-text">{{ form_errors.first_name }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="lastName" class="form-label">Last Name*</label>
+                                <input type="text" class="form-control {% if form_errors.last_name %}invalid-field{% endif %}" 
+                                    id="lastName" name="last_name" value="{{ form_data.last_name|default:user.last_name }}" required>
+                                {% if form_errors.last_name %}
+                                    <div class="error-text">{{ form_errors.last_name }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="phoneCountry" class="form-label">Country Code*</label>
+                                <div class="dropdown">
+                                    <input type="text" class="form-control {% if form_errors.phone_country %}invalid-field{% endif %}" 
+                                        id="phoneCountry" name="phone_country" placeholder="+1" 
+                                        value="{{ form_data.phone_country }}" required autocomplete="off">
+                                    <ul class="dropdown-menu w-100" id="countryCodeList">
+                                        <li><a class="dropdown-item" data-code="+1">+1 (USA/Canada)</a></li>
+                                        <li><a class="dropdown-item" data-code="+44">+44 (UK)</a></li>
+                                        <li><a class="dropdown-item" data-code="+49">+49 (Germany)</a></li>
+                                        <li><a class="dropdown-item" data-code="+33">+33 (France)</a></li>
+                                        <li><a class="dropdown-item" data-code="+39">+39 (Italy)</a></li>
+                                        <li><a class="dropdown-item" data-code="+34">+34 (Spain)</a></li>
+                                        <li><a class="dropdown-item" data-code="+31">+31 (Netherlands)</a></li>
+                                        <li><a class="dropdown-item" data-code="+32">+32 (Belgium)</a></li>
+                                        <li><a class="dropdown-item" data-code="+41">+41 (Switzerland)</a></li>
+                                        <li><a class="dropdown-item" data-code="+46">+46 (Sweden)</a></li>
+                                        <li><a class="dropdown-item" data-code="+47">+47 (Norway)</a></li>
+                                        <li><a class="dropdown-item" data-code="+45">+45 (Denmark)</a></li>
+                                        <li><a class="dropdown-item" data-code="+358">+358 (Finland)</a></li>
+                                        <li><a class="dropdown-item" data-code="+351">+351 (Portugal)</a></li>
+                                        <li><a class="dropdown-item" data-code="+30">+30 (Greece)</a></li>
+                                        <li><a class="dropdown-item" data-code="+36">+36 (Hungary)</a></li>
+                                        <li><a class="dropdown-item" data-code="+420">+420 (Czech Republic)</a></li>
+                                        <li><a class="dropdown-item" data-code="+48">+48 (Poland)</a></li>
+                                        <li><a class="dropdown-item" data-code="+43">+43 (Austria)</a></li>
+                                        <li><a class="dropdown-item" data-code="+353">+353 (Ireland)</a></li>
+                                        <li><a class="dropdown-item" data-code="+961">+961 (Lebanon)</a></li>
+                                        <li><a class="dropdown-item" data-code="+971">+971 (UAE)</a></li>
+                                        <li><a class="dropdown-item" data-code="+966">+966 (Saudi Arabia)</a></li>
+                                    </ul>
+                                </div>
+                                {% if form_errors.phone_country %}
+                                    <div class="error-text">{{ form_errors.phone_country }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-8">
+                                <label for="phoneNumber" class="form-label">Phone Number*</label>
+                                <input type="text" class="form-control {% if form_errors.phone_number %}invalid-field{% endif %}" 
+                                    id="phoneNumber" name="phone_number" value="{{ form_data.phone_number }}" required>
+                                {% if form_errors.phone_number %}
+                                    <div class="error-text">{{ form_errors.phone_number }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="location" class="form-label">Address (Street, City)*</label>
+                            <textarea class="form-control {% if form_errors.location %}invalid-field{% endif %}" 
+                                id="location" name="location" rows="3" required>{{ form_data.location }}</textarea>
+                            {% if form_errors.location %}
+                                <div class="error-text">{{ form_errors.location }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="additionalInfo" class="form-label">Additional Information</label>
+                            <textarea class="form-control" id="additionalInfo" name="additional_info" rows="3">{{ form_data.additional_info }}</textarea>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Order Summary -->
+                <div class="col-md-6">
+                    <div class="cart-items-container">
+                        <h2 class="font_header">Order Summary</h2>
+                        
+                        <ul class="list-group mb-4">
+                            {% for item in cart_items %}
+                            <li class="list-group-item d-flex">
+                                <div class="flex-shrink-0">
+                                    <img src="{{ item.product_variant.product_color.get_image }}" alt="{{ item.product_variant.product.title }}" class="item-image">
+                                </div>
+                                <div class="ms-3 flex-grow-1">
+                                    <h6 class="my-0">{{ item.product_variant.product.title }}</h6>
+                                    <p class="text-muted mb-1">
+                                        {{ item.product_variant.product_color.color.name }} - {{ item.product_variant.size.name }}
+                                    </p>
+                                    <div class="d-flex justify-content-between">
+                                        <span>Quantity: {{ item.quantity }}</span>
+                                        <span>${{ item.subtotal }}</span>
+                                    </div>
+                                </div>
+                            </li>
+                            {% endfor %}
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Total (USD)</span>
+                                <strong>${{ total }}</strong>
+                            </li>
+                        </ul>
+                        
+                        <div class="d-grid gap-3">
+                            <button type="button" class="custom-button" id="placeOrderBtn">Place Order</button>
+                            <a href="{% url 'shop:shop' %}" class="custom-button">Continue Shopping</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        {% endif %}
+    </div>
+    
+    <!-- Confirmation Modal -->
+    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <button type="button" class="btn-close ms-auto mt-3 me-3" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="confirm-modal-bg">
+                    <h2 class="confirm-modal-title">Confirm Your Order</h2>
+                    <p class="confirm-modal-text">Are you sure you want to place this order?</p>
+                    <div class="confirm-modal-buttons">
+                        <button type="button" class="custom-button" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="custom-button" id="confirmOrder">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

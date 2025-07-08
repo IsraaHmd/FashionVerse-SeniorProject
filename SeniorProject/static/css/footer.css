@@ -1,0 +1,80 @@
+/*--===========================================FOOTER=====================================================--*/
+
+footer {
+    color: black;
+    background-color: white;
+    font-size: 14px;
+    position: relative;
+    transition: 0.3s;
+    --hoverColor: black;
+    font-family: "Raleway", sans-serif;
+    margin-top: 10px;
+}
+@media screen and (min-width: 1200px){
+    /*hover effect for large screens*/
+    footer:hover{
+        background-color: black; /*color-mix(in srgb, black 95%, white 10%);*/
+        opacity: 0.9;
+        color: white;
+        --hoverColor:white;
+    }
+}
+
+footer .footer-top {
+    padding: 50px 0;
+    /*background-color: ;*/
+}
+footer .footer-about .footerlogo {
+    line-height: 1;
+    margin-bottom: 10px;
+    text-decoration: none; /* Ensures links have no underline */
+    color: var(--hoverColor);
+}
+footer .footer-contact p {
+    margin-bottom: 5px;
+}
+footer .footer-about p {
+    font-size: 14px;
+    
+}
+footer .social-links a {
+    color: color-mix(in srgb, #ffffff, var(--hoverColor)  95%);
+    background-color: color-mix(in srgb, #ffffff 5%, white 10%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    font-size: 16px;
+    margin-right: 10px;
+    transition: 0.3s;
+    text-decoration: none;
+}
+footer .footer-links {
+    margin-bottom: 30px;
+}
+
+footer h4 {
+    font-size: 16px;
+    font-weight: bold;
+    position: relative;
+    padding-bottom: 12px;
+}
+footer .footer-links ul i {
+    margin-right: 4px;
+    font-size: 12px;
+    line-height: 0;
+    color: var(--hoverColor);
+}
+footer .footer-links ul a {
+    color: var(--hoverColor);
+    display: inline-block;
+    line-height: 1;
+    text-decoration: none;
+}
+footer .footer-links ul li {
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+}

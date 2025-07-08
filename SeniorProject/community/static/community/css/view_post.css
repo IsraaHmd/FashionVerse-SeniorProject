@@ -1,0 +1,596 @@
+/* view_post.css - Separate CSS file for post detail view */
+
+/* Container for the entire post detail page */
+.post-detail-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Back button styling - arrow only */
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    color: var(--belle-black);
+    text-decoration: none;
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.back-button:hover {
+    color: var(--belle-red);
+}
+
+/* Post image container with responsive height */
+.post-image-container {
+    position: relative;
+    width: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    height: 70vh; /* 70% of viewport height */
+}
+
+.post-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Image expand overlay and button */
+.image-overlay {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.post-image-container:hover .image-overlay {
+    opacity: 1;
+}
+
+.expand-image-btn {
+    background-color: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.expand-image-btn i {
+    font-size: 16px;
+    color: var(--belle-black);
+}
+
+/* Fullscreen image modal */
+.image-modal {
+    display: none;
+    position: fixed;
+    z-index: 1050;
+    padding-top: 50px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.modal-content {
+    margin: auto;
+    display: block;
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+}
+
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Post title and save button layout */
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+.post-header-right{
+    width:30%;
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+}
+.post-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0;
+    color: var(--belle-black);
+}
+
+/* Save button styling */
+.save-button-styling{
+    background-color: var(--belle-red);
+    color: white;
+    border: none;
+    border-radius: 24px;
+    padding: 8px 16px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.save-button-styling:hover {
+    transform: scale(1.05);
+}
+
+/* Post description styles */
+.post-description {
+    color: var(--belle-black);
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+/* Category badge styling */
+.category-badge {
+    display: inline-block;
+    background-color: var(--belle-light-gray);
+    color: var(--belle-black);
+    padding: 6px 12px;
+    border-radius: 16px;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+/* Comments section container */
+.comments-section {
+    margin-top: 30px;
+    width: 100%;
+}
+
+/* Comment form layout */
+.comment-form {
+    display: flex;
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+.comment-input {
+    flex-grow: 1;
+    border: 1px solid #ddd;
+    border-radius: 24px;
+    padding: 10px 16px;
+    font-size: 14px;
+}
+
+.comment-input:focus {
+    outline: none;
+    border-color: var(--belle-red);
+    box-shadow: 0 0 0 2px rgba(193, 18, 31, 0.1);
+}
+
+.comment-submit {
+    background-color: transparent;
+    border: none;
+    margin-left: 10px;
+    cursor: pointer;
+    color: var(--belle-red);
+    font-size: 20px;
+}
+
+/* Comments section heading */
+.comments-heading {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+/* Individual comment container */
+.comment {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--belle-light-gray);
+    width: 100%;
+}
+
+/* Comment header with username */
+.comment-header {
+    display: flex;
+    margin-bottom: 8px;
+}
+
+.comment-user {
+    font-weight: 600;
+    margin-right: 10px;
+}
+
+/* Comment text content */
+.comment-text {
+    color: var(--belle-black);
+    line-height: 1.5;
+}
+
+/* Comment actions (reply button) */
+.comment-actions {
+    margin-top: 8px;
+}
+
+.reply-button {
+    background: none;
+    border: none;
+    color: var(--belle-dark-gray);
+    font-size: 14px;
+    cursor: pointer;
+    padding: 0;
+}
+
+.reply-button:hover {
+    color: var(--belle-red);
+}
+
+/* Reply container */
+.reply-container {
+    margin-top: 10px;
+    margin-left: 20px;
+    padding-left: 10px;
+    border-left: 2px solid var(--belle-light-gray);
+}
+
+/* Reply form - single line input */
+.reply-form {
+    display: flex;
+    width: 100%;
+}
+
+.reply-input {
+    flex-grow: 1;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    padding: 8px 0;
+    font-size: 14px;
+    background: transparent;
+}
+
+.reply-input:focus {
+    outline: none;
+    border-bottom-color: var(--belle-red);
+}
+
+.reply-submit {
+    background-color: transparent;
+    border: none;
+    margin-left: 10px;
+    cursor: pointer;
+    color: var(--belle-red);
+    font-size: 16px;
+}
+
+/* Reply styling */
+.reply {
+    margin-top: 12px;
+    margin-left: 20px;
+    padding-left: 10px;
+    border-left: 2px solid var(--belle-light-gray);
+}
+
+.reply-header {
+    margin-bottom: 4px;
+}
+
+.reply-user {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.reply-text {
+    color: var(--belle-black);
+    line-height: 1.4;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .post-image-container {
+        height: 60vh;
+    }
+}
+
+@media (max-width: 768px) {
+    .post-detail-container {
+        padding: 15px;
+    }
+    
+    .post-image-container {
+        height: 50vh;
+    }
+    
+    .post-title {
+        font-size: 20px;
+    }
+    
+    .comments-heading {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 576px) {
+    .post-detail-container {
+        padding: 10px;
+    }
+    
+    .post-image-container {
+        height: 40vh;
+    }
+    
+    .post-header {
+        /*flex-direction: column;*/
+        align-items: space-between;
+    }
+    
+    
+    .reply-container {
+        margin-left: 10px;
+    }
+    
+    .reply {
+        margin-left: 10px;
+    }
+}
+
+.comment-date{
+    font-size: 12px;
+    color: var(--belle-dark-gray);
+}
+/*          new              */
+/* Additional CSS for comments and replies - Add to view_post.css */
+
+/* Profile picture styling for comments */
+.profile-pic {
+    border-radius: 50%;
+    margin-right: 5px;
+    vertical-align: middle;
+    object-fit: cover;
+}
+
+.profile-pic-small {
+    border-radius: 50%;
+    margin-right: 3px;
+    vertical-align: middle;
+    object-fit: cover;
+    width: 20px;
+    height: 20px;
+}
+
+/* User initials for users without profile pictures */
+.user-initial {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background-color: var(--belle-red);
+    color: white;
+    border-radius: 50%;
+    margin-right: 5px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.user-initial-small {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    background-color: var(--belle-red);
+    color: white;
+    border-radius: 50%;
+    margin-right: 3px;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+/* Comment with border */
+.comment {
+    margin-bottom: 20px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 100%;
+}
+
+/* Comment header with username and delete option */
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.delete-comment, .delete-reply {
+    color: var(--belle-dark-gray);
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.delete-comment:hover, .delete-reply:hover {
+    color: var(--belle-red);
+}
+
+/* Reply date styling */
+.reply-date {
+    font-size: 11px;
+    color: var(--belle-dark-gray);
+    display: block;
+    margin-top: 2px;
+}
+
+/* Reply styling with border */
+.reply {
+    margin-top: 12px;
+    margin-bottom: 8px;
+    margin-left: 20px;
+    padding: 8px 10px;
+    border: 1px solid #eee;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+}
+
+.reply-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+/* Comments disabled message */
+.comments-disabled {
+    padding: 15px;
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    text-align: center;
+    color: var(--belle-dark-gray);
+    margin-top: 10px;
+}
+.replies-container {
+    margin-top: 10px;
+    margin-left: 20px;
+    padding-left: 10px;
+}
+/* new */
+/* Post options styling - Add to both profile.css and view_post.css */
+
+/* Post options button (three dots) */
+.post-options {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+}
+
+.card-header-actions {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    z-index: 5;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 100%);
+    display: flex;
+    justify-content: flex-end;
+    padding: 8px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.pin-card:hover .card-header-actions {
+    opacity: 1;
+}
+
+.post-options-btn {
+    background-color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.2s;
+}
+
+.post-options-btn:hover {
+    background-color: #f5f5f5;
+}
+
+.post-options-btn i {
+    font-size: 16px;
+    color: var(--belle-black);
+}
+
+/* Post options dropdown menu */
+.post-options-dropdown {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    min-width: 150px;
+    padding: 8px 0;
+    display: none;
+    z-index: 15;
+}
+
+
+
+.post-option-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    color: var(--belle-black);
+    text-decoration: none;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+.post-option-item:hover {
+    background-color: #f5f5f5;
+    color: var(--belle-red);
+}
+
+.post-option-item i {
+    margin-right: 8px;
+    font-size: 14px;
+}
+
+/* Post detail page specific styles */
+.post-owner-actions {
+    position: relative;
+}
+
+/* Media queries */
+@media (max-width: 576px) {
+    .post-options-dropdown {
+        right: -5px;
+    }
+    
+    .post-header {
+        position: relative;
+    }
+    
+    .post-owner-actions {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+    .save-button-styling {
+        position: absolute;
+        top: 0;
+        right: 50px;
+    }
+}

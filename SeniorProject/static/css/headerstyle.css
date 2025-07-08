@@ -1,0 +1,348 @@
+/*
+Defines the custom color variable inside the :root selector. This makes the variable globally accessible throughout your CSS.
+*/
+
+:root {
+    --header-elements-color: black;
+    --nav-sm-elements-color: white;
+}
+/*
+To use the variable we created above in css eg: .header-font {color: var(--custom-color);}
+*/
+
+/*----------------------------------------Fonts------------------------------------------*/
+.raleway{
+  font-family: "Raleway", sans-serif;
+  font-optical-sizing: auto;
+  font-weight:400;
+  font-style: normal;
+}
+
+/*------------------------------------------------------------------HEADER--------------------------------------------------*/
+.header-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+/* Font color class */
+.header-font {
+    /*also using the raleway class above in the elements using this*/
+    text-decoration: none; /* Ensures links have no underline */
+    font-size: 14px;
+    letter-spacing: normal;
+}
+
+.headerElement{
+    color: var(--header-elements-color);
+}
+.headerElement:hover, .headerElement:visited, .headerElement:active{
+    color: var(--header-elements-color);
+}
+
+.logo {
+    text-decoration: none;
+}
+.logo:hover{
+    text-decoration: none;
+}
+.classicFontStyle{
+    font-family:"New York", Iowan Old Style, Apple Garamond, Baskerville, Times New Roman, Droid Serif, Times, Source Serif Pro, serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    font-size: 24px;
+    line-height: 1.6;
+}
+/* Container to center and space elements */
+.header-menu-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 48px 70px;
+    /*new*/
+    position: relative;
+    z-index: 1; /* Ensure this is above the video */
+    background-color: transparent;
+    opacity:1;
+}
+
+
+/* Navigation links class */
+.nav-links {
+    display: flex;
+    gap: 0px; /* Adjust space between links */
+}
+/* Navigation links class */
+.header-link,.nav-links a:visited, .nav-links a:active, .nav-links a:focus, .nav-links a:link{
+    padding: 0 40px; /* Add horizontal padding to each link */
+    text-decoration: none; /* Ensure links have no underline */
+    position: relative;
+
+}
+
+/*For the underline and bod effect*/
+.nav-links a:hover{
+    /* Change the color of the text to white when hovered and at the same time with the appearance of line */
+     font-weight: 600; 
+     padding: 0 40px; /* Add horizontal padding to each link */
+     text-decoration: none; /* Ensure links have no underline */
+     position: relative;
+     
+}
+ .header-link::after {
+     content: '';
+     width: 0%;
+     height: 0.9px;
+     background: var(--header-elements-color);;
+     margin: 0; /* Remove auto margin to start from the left */
+     transition: 0.4s;
+     display: block;
+     transform-origin: left; /* Ensure the line starts from the left */
+     /*to make the line appear from the middle and stretch outwards make margin:auto; and remove transform-origin: left;*/
+   }
+   
+.header-link:hover::after  {
+     width: 100%;
+   }
+   
+/*-------------------------------------------------header logos---------------------------*/
+/*modified*/
+/*
+Deleted the below since no more search icon
+@media screen and (min-width: 700px) {
+    .header__secondary-nav {
+        column-gap: 1.25rem;
+    }
+}
+*/
+
+.header__secondary-nav {
+    /*flex-wrap: wrap;*/
+    justify-content: end;
+    justify-self: end;
+    gap: .625rem .9rem;
+    display: flex;
+}
+
+.headerIcon {
+    width: 24px;  /* Set the desired size */
+    height: 24px; /* Ensure consistent height */
+    font-size: 24px; /*new*/
+}
+.headerIconLink{
+    margin-right: 18px; /* Adjust this value for spacing */
+}
+
+
+/*------------------Responsiveness of header Nav Bar---------------*/
+/*on large screens*/
+@media screen and (min-width: 1200px){
+    .nav-links {
+        display: flex;
+    }
+    .navmenu {
+        display: none;
+    }
+}
+
+/* Navmenu - Mobile */
+@media (max-width: 1199px) {
+    /* previous stuff */
+    .header__secondary-nav
+    {
+        display: block;
+        position: absolute;
+        right: 120px;
+    }
+    .nav-links {
+        display: none; /* Hide nav on mobile */
+    }
+    .header-menu-container-nav-active:hover{
+        background-color: transparent;
+    }
+    /* the menu */
+    .mobile-nav-toggle {
+      color: var(--header-elements-color);
+      font-size: 28px;
+      line-height: 0;
+      margin-right: 10px;
+      cursor: pointer;
+      transition: color 0.3s;
+      position: absolute;
+      right: 50px;
+      caret-color: transparent; 
+    }
+  
+    .navmenu {
+      padding: 0;
+      z-index: 9997;
+    }
+  
+    .navmenu ul {
+      display: none;
+      list-style: none;
+      position: absolute;
+      inset: 120px 20px 20px 20px;
+      padding: 10px 0;
+      margin: 0;
+      border-radius: 6px;
+      background-color: rgba(0, 0, 0, 0.7) ;
+      overflow-y: auto;
+      transition: 0.3s;
+      z-index: 9998;
+      box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
+    }
+    .navmenu ul:hover{
+        background-color: rgba(0, 0, 0, 0.7) ;
+    }
+    .navmenu a,
+    .navmenu a:focus {
+      color:var(--nav-sm-elements-color);
+      padding: 20px 30px;
+      font-size: 17px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      white-space: nowrap;
+      transition: 0.3s;
+    }
+  
+    .navmenu a i,
+    .navmenu a:focus i {
+      font-size: 12px;
+      line-height: 0;
+      margin-left: 5px;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: 0.3s;
+    }
+  
+    .navmenu a:hover,
+    .navmenu .active,
+    .navmenu .active:focus {
+        background-color: rgba(0, 0, 0, 0.7) ;
+        color:var(--nav-sm-elements-color);
+    }
+ 
+    .mobile-nav-active {
+      overflow: hidden;
+    }
+  
+    .mobile-nav-active .mobile-nav-toggle {
+      color: var(--header-elements-color);
+      position: absolute;
+      font-size: 32px;
+      right: 50px;
+      margin-right: 0;
+      z-index: 9999;
+    }
+  
+    .mobile-nav-active .navmenu {
+      position: fixed;
+      overflow: hidden;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.2) ;/*the background aka video behind the nav previously: rgba(33, 37, 41, 0.8)*/
+      transition: 0.3s;
+    }
+  
+    .mobile-nav-active .navmenu>ul {
+      display: block;
+    }
+  }
+
+/*------------------------------New-------------------------------*/
+.header__secondary-nav a{
+    text-decoration: none;
+}
+/*-----Search--------*/
+.search-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 9999;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.search-overlay.active {
+    opacity: 1;
+}
+.search-container {
+    width: 80%;
+    max-width: 32rem;
+    position: relative;
+}
+
+.search-input-wrapper {
+    position: relative;
+    width: 100%;
+    height: 6rem;
+    border: 0.2rem solid #fff;
+    border-radius: 10rem;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+}
+
+.search-input {
+    width: calc(100% - 5rem);
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-size: 1.6rem;
+    padding: 0 1rem;
+}
+
+.search-input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.search-close {
+    position: absolute;
+    right: 1.5rem;
+    font-size: 2.5rem;
+    color: #fff;
+    cursor: pointer;
+}
+
+/* Media queries to handle different screen sizes */
+@media (max-width: 768px) {
+    .search-container {
+        width: 90%;
+    }
+    
+    .search-input-wrapper {
+        height: 5rem;
+        border-width: 0.2rem;
+    }
+    
+    .search-input {
+        font-size: 1.4rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .search-container {
+        width: 95%;
+    }
+    
+    .search-input-wrapper {
+        height: 4.5rem;
+    }
+    
+    .search-input {
+        font-size: 1.2rem;
+    }
+}
+/*-----End Search ---*/

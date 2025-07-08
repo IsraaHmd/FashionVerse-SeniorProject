@@ -1,0 +1,182 @@
+/* homepage.css */
+.search-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    padding: 8px;
+  }
+  
+  .search-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+  }
+  
+  .search-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--belle-grey);
+  }
+  
+  .search-input {
+    padding: 12px 16px 12px 40px;
+    border-radius: 24px;
+    border: none;
+    background-color: var(--belle-light-grey);
+    width: 100%;
+    font-size: 16px;
+  }
+  
+  .search-input:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(230, 0, 35, 0.1);
+  }
+  
+  /* Pin Grid Layout */
+  .pin-container {
+    padding: 8px;
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(236px, 1fr));
+    grid-auto-rows: 10px;
+    grid-gap: 16px;
+  }
+  
+  .grid-item {
+    grid-row-end: span 26;  /* Default height, will be adjusted by JavaScript */
+  }
+  
+  /* Pin Card Styles */
+  .pin-card {
+    border-radius: 16px;
+    overflow: hidden;
+    background-color: var(--belle-white);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+  }
+  
+  .pin-card:hover {
+    transform: scale(1.02);
+  }
+  
+  .pin-image-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 16px 16px 0 0;
+  }
+  
+  .pin-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+  }
+  
+  .pin-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  
+  .pin-image-container:hover .pin-overlay {
+    opacity: 1;
+  }
+  
+  .pin-overlay i {
+    color: var(--belle-white);
+    font-size: 32px;
+  }
+  
+  .pin-info {
+    padding: 12px;
+  }
+  
+  .pin-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--belle-black);
+  }
+  
+  .pin-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .pin-user {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .user-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--belle-grey);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .grid {
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    }
+    
+    .pin-title {
+      font-size: 12px;
+    }
+    
+    .user-name {
+      font-size: 10px;
+    }
+    
+    .save-btn {
+      padding: 6px 10px;
+      font-size: 12px;
+    }
+  }
+
+.category-filters {
+  padding: 10px 0;
+  margin-bottom: 20px;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+.category-btn {
+    margin-right: 8px;
+    border-radius: 20px;
+    padding: 5px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.category-btn.active {
+    background-color: #dc3545;
+    color: white;
+}
+.save-btn.saved {
+    background-color: #dc3545;
+    color: white;
+}
+.pin-category {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 5px;
+}
+.load-more {
+    text-align: center;
+    margin: 20px 0;
+}

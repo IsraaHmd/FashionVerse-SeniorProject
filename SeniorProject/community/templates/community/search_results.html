@@ -1,0 +1,107 @@
+{% extends 'community/base.html' %}
+{% load static %}
+
+{% block title %}
+    {% if search_query %}
+        Search Results for "{{ search_query }}" - BELLE
+    {% else %}
+        Search - BELLE
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<!-- Search Results Header -->
+{% if search_query %}
+<div class="search-header mb-4">
+    <div class="container">
+        <h2 class="h4 mb-2">Search Results for "{{ search_query }}"</h2>
+        <!-- Removed search count
+        <p class="text-muted mb-0">
+            {% if search_results_count %}
+                Found {{ search_results_count }} result{{ search_results_count|pluralize }}
+            {% else %}
+                No results found
+            {% endif %}
+        </p>
+        -->
+    </div>
+</div>
+{% endif %}
+
+<div class="masonry-container">
+    <div class="masonry-grid">
+        <!-- Search results - same format as homepage -->
+        {% for pin in pins %}
+            <div class="pin-item">
+                <div class="card pin-card">
+                    <a href="{% url 'community:post_detail' post_id=pin.id %}">
+                        <img src="{{ pin.get_image }}" class="card-img-top" alt="{{ pin.title }}">
+                    </a>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ pin.title }}</h5>
+                        <div class="pin-footer d-flex justify-content-between align-items-center">
+                            {% if pin.category %}
+                            <small class="text-muted">{{ pin.category.name }}</small>
+                            {% endif %}
+                            <button class="btn save-btn {% if pin.is_saved %}saved{% endif %} {% if not pin.category %}ms-auto{% endif %} save-button" 
+                                data-post-id="{{ pin.id }}">
+                                <i class="bi {% if post.is_saved %}bi-bookmark-check-fill{% else %}bi-bookmark-fill{% endif %} me-1"></i> {% if pin.is_saved %}Saved{% else %}Save{% endif %}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+        <div class="col-12 text-center py-5">
+            <div class="empty-state">
+                <i class="bi bi-search display-1 text-muted"></i>
+                <h3 class="mt-3">
+                    {% if search_query %}
+                        No results found for "{{ search_query }}"
+                    {% else %}
+                        Start your search
+                    {% endif %}
+                </h3>
+                <p class="text-muted">
+                    {% if search_query %}
+                        Try different keywords or browse all posts.
+                    {% else %}
+                        Enter a search term to find posts by title, category, or description.
+                    {% endif %}
+                </p>
+                {% if search_query %}
+                <a href="{% url 'community:homepage' %}" class="btn btn-outline-danger mt-3">
+                    <i class="bi bi-house me-1"></i> Browse All Posts
+                </a>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Pagination controls -->
+{% if pins.has_other_pages %}
+<div class="load-more">
+    {% if pins.has_previous %}
+    <a href="?page={{ pins.previous_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> Previous
+    </a>
+    {% endif %}
+    
+    <span class="mx-3">
+        Page {{ pins.number }} of {{ pins.paginator.num_pages }}
+    </span>
+    
+    {% if pins.has_next %}
+    <a href="?page={{ pins.next_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}" class="btn btn-outline-primary">
+        Next <i class="bi bi-arrow-right"></i>
+    </a>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'community/js/save_posts.js' %}"></script>
+{% endblock %}

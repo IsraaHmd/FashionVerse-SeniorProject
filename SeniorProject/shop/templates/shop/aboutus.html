@@ -1,0 +1,108 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BELLE WORLD</title>
+    <!--Bootsrap 5-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <!--Font: Raleway-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome 4.x CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- MY Css files -->
+    <link rel="stylesheet" href="{% static 'css/headerstyle.css' %}">
+    <link rel="stylesheet" href="{% static 'shop/css/aboutus.css' %}">
+    <link rel="stylesheet" href="{% static 'css/footer.css' %}">  
+    <link rel="stylesheet" href="{% static 'shop/css/cart.css' %}">
+    <!--js files-->
+    <script src="{% static 'shop/js/cart.js' %}"></script>
+    <!--========NEW SENIOR=========-->
+    <!--GSAP for a Smooth Animation-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <!--Chatbot-->
+    <script defer src="https://app.fastbots.ai/embed.js" data-bot-id="cmalkfyek018crilyk5j4m42m"></script>
+</head>
+
+<body>
+    <!------------------------------------------------header------------------------------------------>
+    <div class="head">
+        <img src="{% static 'shop/images/s1.png' %}" id="bgimg" class="img-fluid">
+        {% include 'base/header.html' %}
+        <div class="bnr-caption">
+            <!--
+            <div> 
+                <h1 class="aboutUsTitle">ABOUT US</h1>
+                <h2 class="aboutUsTitle">#BELLESOCIETY</h2>
+            </div>-->
+            
+            <div class="moving-text-container">
+                <div class="moving-text aboutUsTitle">ABOUT US | &nbsp; WELCOME TO OUR WORLD &nbsp; #BELLESOCIETY</div>
+            </div>
+            
+            <script>
+                gsap.fromTo(".moving-text-container", 
+                    { x: "-100%" }, 
+                    { x: "100%", duration: 12, repeat: -1, ease: "linear" }
+                );
+            </script>
+            
+        </div>
+    </div>
+<!------------------------------------------------Main------------------------------------------>
+    <main>
+        <!---------------------------------------SHORT INTRO------------------------------------>
+        
+        <div class="section1 container-fluid">
+            <div class="row align-items-start">
+                <div class="col-lg-5 col-md-9 col-12 mb-3 abtParContainer paragraphs">
+                    <h2 class="headerElement">Mission</h2>
+                    <p>At BELLE, we believe that every woman deserves to express her unique style without compromising on elegance...</p>
+                    <p>Our mission is to provide a one-stop destination where every woman can find pieces that resonate with her personal taste...</p>
+                    <p>At BELLE, your individuality shines through, and we're here to make every shopping experience as delightful as possible.</p>
+                </div>
+                <div class="col-lg-6 col-md-9 col-12">
+                    <video playsinline="true" preload="metadata" muted="muted" loop="loop" autoplay="autoplay" class="fullvideo w-100">
+                        <source src="https://videos.pexels.com/video-files/9834903/9834903-uhd_2732_1440_25fps.mp4">
+                    </video>
+                </div>
+            </div>       
+        </div>
+        <!------------------------------------- Our Story ---------------------------------->
+        <div class="section2 container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-lg-5 col-md-9 col-sm-9 mb-4 d-flex align-items-center justify-content-center">
+                    <img src="{% static 'shop/images/abt3.png' %}" placeholder="modelImage" class="parImage img-fluid">
+                </div>
+                <div class="col-lg-6 col-md-9 col-sm-10 storypar paragraphs">
+                    <h1 class="headerElement">Our Story</h1>
+                    <br>
+                    <p>BELLE was founded a few years ago, it started with the our founder's passion for fashion.</p>
+                    <p>Our commitment to inclusivity and diversity is matched by our dedication to aesthetics. Our founder is dedicated
+                        to her mission of helping women find their style that best expresses them, regardless of their bodytype, 
+                        race... As she firmly believes that clothes and styles' purpose extend way more beyond just looking decent and elegant,
+                        it's about expressing yourself.
+                    </p>
+                    <p>Through #BELLESOCIETY, we have built a community that encourages individuality.</p>
+                    <p>At BELLE, we remain committed to offering an experience that blends style, quality, and inclusivity.</p>
+                </div>
+            </div>
+        </div>
+        <!--------------------------------------Social media --------------------------------->
+    </main>
+    <!--==============================================FOOTER================================================-->
+    {% include 'base/footer.html' %} 
+    
+    <!--====================================================END OF FOOTER=======================================-->
+    <!------------------------------------ CART --------------------------------------------->
+    {% include 'shop/cart.html' %}
+</body>
+</html>

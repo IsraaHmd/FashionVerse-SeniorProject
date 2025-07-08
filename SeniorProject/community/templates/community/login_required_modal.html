@@ -1,0 +1,61 @@
+{% extends 'community/base.html' %}
+{% load static %}
+
+{% block title %}Login Required - BELLE Community{% endblock %}
+
+{% block content %}
+<div class="container mt-5 pt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-white text-center">
+                    <h4 class="my-2 classicFontStyle">Login Required</h4>
+                </div>
+                <div class="card-body text-center">
+                    <p class="mb-4">You need to be logged in to access the BELLE Community.</p>
+                    
+                    <div class="d-flex justify-content-center gap-3">
+                        <a href="{{ shop_url }}" class="btn btn-outline-secondary">Return to Shop</a>
+                        <a href="{{ login_url }}" class="btn btn-danger">Login</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Auto-show modal on page load 
+<div class="modal fade" id="loginRequiredModal" tabindex="-1" aria-labelledby="loginRequiredModalLabel">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title classicFontStyle" id="loginRequiredModalLabel">Login Required</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <p>You need to be logged in to access the BELLE Community.</p>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <a href="{{ login_url }}" class="btn btn-primary">Login</a>
+                <a href="{{ shop_url }}" class="btn btn-outline-secondary">Return to Shop</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var loginModal = new bootstrap.Modal(document.getElementById('loginRequiredModal'));
+        loginModal.show();
+        
+        // Handle modal close by redirecting to shop
+        document.querySelector('#loginRequiredModal .btn-close').addEventListener('click', function() {
+            window.location.href = "{{ shop_url }}";
+        });
+    });
+</script>
+{% endblock %}
+-->
+{% endblock %}

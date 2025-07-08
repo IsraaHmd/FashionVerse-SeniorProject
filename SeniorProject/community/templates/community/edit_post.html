@@ -1,0 +1,182 @@
+{% extends 'community/base.html' %}
+{% load static %}
+
+{% block title %}BELLE - Edit Post{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'community/css/create_post.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="create-post-container">
+    <!-- Back button at the top -->
+    <div class="back-button-container">
+        <a href="{% url 'community:post_detail' post_id=post.id %}" class="back-button" id="backButton">
+            <i class="bi bi-arrow-left"></i> Cancel and go back
+        </a>
+    </div>
+    
+    <form id="postForm" method="post" enctype="multipart/form-data" action="{% url 'community:edit_post' post_id=post.id %}"> 
+        <div class="row">
+            {% csrf_token %}
+            
+            <!-- Left Side - Image Upload/URL Area -->
+            <div class="col-md-6">
+                <div class="image-upload-area" id="imageUploadArea">
+                    <div class="upload-placeholder" id="uploadPlaceholder">
+                        <i class="bi bi-arrow-up-circle-fill upload-icon"></i>
+                        <p class="upload-text">Choose an image or drag and drop it here</p>
+                        <p class="file-recommendation">You can't fill in the post fields without uploading an image or entering a url.</p>
+                        
+                        <input type="file" name="image_upload" id="fileUpload" class="file-input" accept="image/*,video/*">
+                        
+                        <!-- New URL input field directly below file upload -->
+                        <div class="direct-url-input">
+                            <p class="or-divider">Or enter the URL</p>
+                            <input type="text" class="belle-input url-direct-input{% if errors.image %} is-invalid{% endif %}" 
+                                name="image_url" id="directUrlInput" 
+                                placeholder="https://example.com/image.jpg"
+                                value="{{ form_data.image_url|default:post.image_url|default:'' }}">
+                            <button type="button" class="btn-primary belle-button use-url-btn" id="useUrlBtn">Use URL</button>
+                            {% if errors.image %}
+                            <div class="error-message">{{ errors.image }}</div>
+                            {% endif %}
+                            {% if errors.image_url %}
+                            <div class="error-message">{{ errors.image }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="preview-container edit-image-container" id="imagePreviewContainer">
+                        {% if post.image_upload %}
+                            <img id="imagePreview" class="preview-image" src="{{ post.image_upload.url }}" alt="Preview">
+                        {% elif post.image_url %}
+                            <img id="imagePreview" class="preview-image" src="{{ post.image_url }}" alt="Preview">
+                        {% else %}
+                            <img id="imagePreview" class="preview-image" src="" alt="Preview">
+                        {% endif %}
+                        <div class="preview-overlay">
+                            <button type="button" class="change-image-btn" id="changeImageBtn">
+                                <i class="bi bi-x-lg"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Side - Post Details Form -->
+            <div class="col-md-6">
+                <div class="post-details-form" id="postDetailsForm">
+                    <!-- Title Input -->
+                    <div class="form-group mb-4">
+                        <label for="postTitle" class="form-label">Title</label>
+                        <input type="text" class="belle-input{% if errors.title %} is-invalid{% endif %}" 
+                               name="title" id="postTitle" 
+                               placeholder="Enter a title" 
+                               value="{{ form_data.title|default:post.title }}">
+                        {% if errors.title %}
+                        <div class="error-message">{{ errors.title }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Description Input -->
+                    <div class="form-group mb-4">
+                        <label for="postDescription" class="form-label">Description</label>
+                        <textarea class="belle-input" name="description" id="postDescription"
+                                rows="5" placeholder="Add a detailed description">{{ form_data.description|default:post.description }}</textarea>
+                    </div>
+                    
+                    <!-- Category Dropdown -->
+                    <div class="form-group mb-4">
+                        <label for="postCategory" class="form-label">Category</label>
+                        <div class="dropdown category-dropdown">
+                            <button class="btn dropdown-toggle category-select" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                {% if form_data.category_id %}
+                                    {% for category in categories %}
+                                        {% if category.id|stringformat:"s" == form_data.category_id|stringformat:"s" %}
+                                            {{ category.name }}
+                                        {% endif %}
+                                    {% endfor %}
+                                {% elif post.category %}
+                                    {{ post.category.name }}
+                                {% else %}
+                                    Choose a Category
+                                {% endif %}
+                            </button>
+                            <input type="hidden" name="category_id" id="selectedCategory" 
+                            value="{% if form_data.category_id %}{{ form_data.category_id }}{% elif post.category %}{{ post.category.id }}{% else %}{% endif %}">
+                            <ul class="dropdown-menu dropdown-menu-post" aria-labelledby="categoryDropdown">
+                                <li class="dropdown-search">
+                                    <input type="text" class="belle-input search-input-dropdown" id="categorySearch" placeholder="Search for a Category">
+                                </li>
+                                {% for category in categories %}
+                                <li><a class="dropdown-item dropdown-item-post" href="#" data-category-id="{{ category.id }}">{{ category.name }}</a></li>
+                                {% endfor %}
+                                <li class="dropdown-divider"></li>
+                                <li><a class="dropdown-item create-new dropdown-item-post" href="#"><i class="bi bi-plus-circle me-2"></i>Create new Category</a></li>
+                            </ul>
+                            {% if errors.category %}
+                            <div class="error-message">{{ errors.category }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <!-- Comments Toggle -->
+                    <div class="form-group mb-4">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <label class="form-check-label">Allow comments</label>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" name="allow_comments" id="commentsToggle" 
+                                    {% if form_data.allow_comments is not None %}
+                                        {% if form_data.allow_comments %}checked{% endif %}
+                                    {% elif post.allow_comments %}checked{% endif %}>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Submit Button -->
+                    <div class="submit-container">
+                        <button type="submit" class="btn btn-primary save-post-btn" id="savePostBtn">Update Post</button>
+                    </div>
+                
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Modal for Create New Category -->
+<div class="modal fade" id="createCategoryModal" tabindex="-1" aria-labelledby="createCategoryModalLabel">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createCategoryModalLabel">Create new Category</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="newCategoryName" class="form-label">Name</label>
+                    <input type="text" class="belle-input" id="newCategoryName" placeholder="Enter Category name">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" id="createCategoryBtn">Create</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Display any general errors -->
+{% if errors.general %}
+<div class="alert alert-danger" role="alert">
+    {% for error in errors.general %}
+        <p>{{ error }}</p>
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'community/js/edit_post.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,247 @@
+{% extends 'community/base.html' %}
+{% load static %}
+
+{% block title %}BELLE - Your Profile{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'community/css/profile.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+    <!-- Profile Header -->
+    <div class="profile-header">
+        <div class="saved-header classicFontStyle" {% if active_tab != 'saved' %}style="display: none;"{% endif %}>
+            <h3>Your Saved Ideas</h3>
+        </div>
+        <div class="profile-info">
+            <div class="profile-avatar">
+                {% if profile.profile_image %}
+                    <img src="{{ profile.profile_image }}" alt="{{ profile.username }}" class="profile-avatar-large">
+                {% else %}
+                    <div class="profile-avatar-large">{{ profile.initial }}</div>
+                {% endif %}
+                <button class="btn btn-light btn-sm rounded-circle edit-avatar">
+                    <i class="bi bi-pencil"></i>
+                </button>
+            </div>
+            
+            <div class="profile-details">
+                <h2 class="profile-name">{{ profile.username }}</h2>
+                <p class="profile-username">{{ profile.email }}</p>
+            </div>
+            
+            <div class="profile-actions d-flex align-items-center">
+                <button class="btn btn-dark rounded-pill me-2">Edit profile picture</button>
+                <div class="profile-search-container">
+                    <input type="text" class="profile-search-field" placeholder="Search your posts">
+                    <i class="bi bi-search profile-search-icon"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Profile Content Navigation -->
+    <div class="profile-nav">
+        <div class="nav nav-tabs border-0" id="profile-tab" role="tablist">
+            <button class="nav-link {% if active_tab == 'created' %}active{% endif %}" id="created-tab" data-bs-toggle="tab" data-bs-target="#created" type="button" role="tab" aria-controls="created" aria-selected="{% if active_tab == 'created' %}true{% else %}false{% endif %}">Created</button>
+            <button class="nav-link {% if active_tab == 'saved' %}active{% endif %}" id="saved-tab" data-bs-toggle="tab" data-bs-target="#saved" type="button" role="tab" aria-controls="saved" aria-selected="{% if active_tab == 'saved' %}true{% else %}false{% endif %}">Saved</button>
+        </div>
+    </div>
+    
+    <!-- Profile Content -->
+    <div class="tab-content" id="profile-tabContent">
+        <!-- Created Pins Tab -->
+        <div class="tab-pane fade {% if active_tab == 'created' %}show active{% endif %}" id="created" role="tabpanel" aria-labelledby="created-tab">
+            {% if active_tab == 'created' %}
+                {% if user_posts %}
+                    <div class="masonry-container">
+                        <div class="masonry-grid">
+                            {% for post in user_posts %}
+                                <div class="pin-item">
+                                    <div class="card pin-card">
+                                        <!--post actions-->
+                                        <div class="card-header-actions">
+                                            <div class="post-options">
+                                                <button class="post-options-btn" type="button">
+                                                    <i class="bi bi-three-dots-vertical"></i>
+                                                </button>
+                                                <div class="post-options-dropdown">
+                                                    <a href="{% url 'community:edit_post' post_id=post.id %}" class="post-option-item">
+                                                        <i class="bi bi-pencil"></i> Edit post
+                                                    </a>
+                                                    <a href="#" class="post-option-item delete-post-btn" data-post-id="{{ post.id }}">
+                                                        <i class="bi bi-trash"></i> Delete post
+                                                    </a>
+                                                    <a class="save-button post-option-item {% if post.is_saved %}saved{% endif %}" data-post-id="{{ post.id }}">
+                                                        <i class="bi {% if post.is_saved %}bi-bookmark-check-fill{% else %}bi-bookmark-fill{% endif %} me-1"></i> {% if post.is_saved %}Saved{% else %}Save{% endif %}
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end of post actions-->
+                                        <a href="{% url 'community:post_detail' post_id=post.id %}">
+                                            {% if post.image_upload %}
+                                                <img src="{{ post.image_upload.url }}" class="card-img-top" alt="{{ post.title }}">
+                                            {% elif post.image_url %}
+                                                <img src="{{ post.image_url }}" class="card-img-top" alt="{{ post.title }}">
+                                            {% endif %}
+                                        </a>
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ post.title }}</h5>
+                                            <div class="pin-footer d-flex justify-content-between align-items-center">
+                                                <small class="text-muted">{% if post.category %}{{ post.category.name }}{% endif %}</small>
+                                                <div>
+                                                    <a href="{% url 'community:post_detail' post_id=post.id %}" class="btn btn-sm btn-outline-dark rounded-pill">View</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="empty-state">
+                        <div class="empty-graphic">
+                            <i class="bi bi-plus-square-fill fs-1"></i>
+                        </div>
+                        <h3>Create your first post</h3>
+                        <p>Share your ideas, projects, and inspirations with the community</p>
+                        <a href="{% url 'community:create_post' %}" class="btn btn-danger rounded-pill create-pin-btn">Create a Post</a>
+                    </div>
+                {% endif %}
+            {% else %}
+                <div class="loading-container" id="created-loading">
+                    <div class="empty-state">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        
+        <!-- Saved Pins Tab -->
+        <div class="tab-pane fade {% if active_tab == 'saved' %}show active{% endif %}" id="saved" role="tabpanel" aria-labelledby="saved-tab">
+            {% if active_tab == 'saved' %}
+                {% if saved_posts %}
+                    <div class="masonry-container">
+                        <div class="masonry-grid">
+                            {% for post in saved_posts %}
+                                <div class="pin-item">
+                                    <div class="card pin-card">
+                                        <a href="{% url 'community:post_detail' post_id=post.id %}">
+                                            {% if post.image_upload %}
+                                                <img src="{{ post.image_upload.url }}" class="card-img-top" alt="{{ post.title }}">
+                                            {% elif post.image_url %}
+                                                <img src="{{ post.image_url }}" class="card-img-top" alt="{{ post.title }}">
+                                            {% endif %}
+                                        </a>
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ post.title }}</h5>
+                                            <div class="pin-footer d-flex justify-content-between align-items-center">
+                                                <small class="text-muted">{% if post.category %}{{ post.category.name }}{% else %}By {{ post.user.username }}{% endif %}</small>
+                                                <button class="btn save-btn save-button {% if post.is_saved %}saved{% endif %}" data-post-id="{{ post.id }}">
+                                                    <i class="bi {% if post.is_saved %}bi-bookmark-check-fill{% else %}bi-bookmark-fill{% endif %} me-1"></i> {% if post.is_saved %}Saved{% else %}Save{% endif %}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="empty-state">
+                        <div class="empty-graphic">
+                            <i class="bi bi-bookmark-heart fs-1"></i>
+                        </div>
+                        <h3>No saved posts yet</h3>
+                        <p>When you save posts you like, they'll appear here</p>
+                        <a href="{% url 'community:homepage' %}" class="btn btn-danger rounded-pill">Discover Ideas</a>
+                    </div>
+                {% endif %}
+            {% else %}
+                <div class="loading-container" id="saved-loading">
+                    <div class="empty-state">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<!-- new -->
+<!-- Delete Post Confirmation Modal -->
+<div class="modal fade" id="deletePostModal" tabindex="-1" aria-labelledby="deletePostModalLabel">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deletePostModalLabel">Delete Post</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this post? This action cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form id="deletePostForm" method="post" action="">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        });
+        
+        // Handle saved header visibility and tab loading
+        const savedTab = document.getElementById('saved-tab');
+        const createdTab = document.getElementById('created-tab');
+        const savedHeader = document.querySelector('.saved-header');
+        
+        if (savedTab && createdTab && savedHeader) {
+            savedTab.addEventListener('click', function() {
+                savedHeader.style.display = 'block';
+                
+                // Update the URL and reload page to get saved posts
+                if (new URLSearchParams(window.location.search).get('tab') !== 'saved') {
+                    window.location.href = '?tab=saved';
+                }
+            });
+            
+            createdTab.addEventListener('click', function() {
+                savedHeader.style.display = 'none';
+                
+                // Update the URL and reload page to get created posts
+                if (new URLSearchParams(window.location.search).get('tab') !== 'created') {
+                    window.location.href = '?tab=created';
+                }
+            });
+        }
+        
+        // Set the correct tab active on page load
+        const activeTab = new URLSearchParams(window.location.search).get('tab') || 'created';
+        if (activeTab === 'saved' && savedTab) {
+            savedHeader.style.display = 'block';
+        } else {
+            savedHeader.style.display = 'none';
+        }
+    });
+</script>
+<!--other scripts: -->
+<script src="{% static 'community/js/post_actions.js' %}"></script>
+<script src="{% static 'community/js/save_posts.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,150 @@
+:root {
+    --text-color: black;
+}
+
+/* Ensure the body and html cover the full viewport height */
+html, body {
+    height: 100%; /* Full viewport height */
+    margin: 0; /* Remove default margin */
+}
+
+/* Style the main content area */
+main {
+    height: auto; /*changed from 70% to auto*/
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: flex-start; /* Align to the top */
+    
+}
+
+/* Center the login form container */
+.login-container {
+    margin-top: 18vh; /* Adjust this value to position the form */
+    text-align: center;
+    width: 100%;
+    max-width: 400px; /* Optional: set a max width for the form */
+}
+.signup-container{
+    margin-top: 1.5rem; /* Adjust this value to position the form */
+    text-align: center;
+    width: 100%;
+    max-width: 400px; /* Optional: set a max width for the form */
+}
+.loginlabel2{
+    margin-bottom: 20px; /* Adds 20px space below the description text */
+}
+form {
+    display: grid; /* Enables grid layout for form elements */
+    gap: 1rem; /* Adds 10px space between input fields and the button */
+    width:100%;
+    margin-bottom: 20px;
+}
+
+.loginLabel{
+    font-family:"New York", Iowan Old Style, Apple Garamond, Baskerville, Times New Roman, Droid Serif, Times, Source Serif Pro, serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    font-size: 25px;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+.textStyling{
+    font-family: "Univers Next", sans-serif;
+    font-weight: normal;
+    font-style: normal;
+    letter-spacing: 0.0em;
+    font-size: 14px;
+}
+.linkStyling{
+    font-family: "Univers Next", sans-serif;
+    font-weight: normal;
+    font-style: normal;
+    letter-spacing: 0.0em;
+    font-size: 14px;
+    text-decoration: none;
+    color: var(--text-color);
+}
+.linkStyling:hover, .linkStyling:visited, .linkStyling:active{
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+.classicFontStyle{
+    font-family:"New York", Iowan Old Style, Apple Garamond, Baskerville, Times New Roman, Droid Serif, Times, Source Serif Pro, serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    font-size: 24px;
+    line-height: 1.6;
+}
+
+input{
+    appearance: none;
+    padding: 0.65rem 0.8rem;
+    border-radius: 0rem;
+    background: transparent;
+    color: black;
+    text-align: start;
+    border-width: 1px;
+    width: 100%;
+   /*( border-color: light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+    transition: border-color .1s ease-in-out; NOT WORKING*/
+    font-family: inherit;
+    font-size: 100%;
+    font-weight: inherit;
+    font-style: inherit;
+    line-height: inherit;
+    text-transform: inherit;
+    /*box-sizing: border-box; rule makes sure that the padding and border are included within the width and height of the element, preventing it from overflowing*/
+    box-sizing: border-box;
+}
+
+.button-submit, #btn_link {
+    --initial-gradient: linear-gradient(rgb(0, 0, 0), rgb(0, 0, 0)); /* Black background by default */
+    --hover-gradient: linear-gradient(rgb(255, 255, 255), rgb(255, 255, 255)); /* White background on hover */
+    --initial-background-position: right;
+    --hover-background-position: left;
+    -webkit-appearance: none;
+    appearance: none;
+    font: inherit;
+    width: 100%; /* Full width */
+    max-width: 100%; /* Prevent overflow */
+    text-shadow: none;
+    text-align: center;
+    cursor: pointer;
+    color: white; /* White text by default */
+    border: 1px solid black; /* Black border */
+    border-radius: 0px;
+    background-color: transparent; /* Transparent background */
+    background-image: var(--initial-gradient), var(--hover-gradient);
+    background-size: 100% 100%, 0 100%;
+    background-position: var(--initial-background-position);
+    background-repeat: no-repeat;
+    justify-content: center;
+    align-items: center;
+    padding: .65rem 1.75rem; /* Adjust padding to maintain width */
+    transition: background-size .45s cubic-bezier(.785,.135,.15,.86), background-position .45s step-end, color .45s cubic-bezier(.785,.135,.15,.86), border .45s cubic-bezier(.785,.135,.15,.86);
+    display: inline-flex;
+    position: relative;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+/* Hover effect */
+.button-submit:hover {
+    background-size: 0 100%, 100% 100%; /* Swap background size on hover */
+    background-position: var(--hover-background-position);
+    color: black; /* Change text color to black on hover */
+    border-color: black; /* Keep border color black on hover */
+}
+
+/*new for the sake of the new header*/
+@media screen and (max-width: 1200px){
+    .login-container {
+        margin-top: 13vh; /* Adjust this value to position the form */
+    }
+}
+/*new*/
+
+.error{
+    color:red;
+}
